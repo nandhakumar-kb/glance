@@ -3,7 +3,7 @@ import ProductCard from '../ProductCard';
 import LoadingCard from '../components/LoadingCard';
 import '../index.css';
 import { Link } from 'react-router-dom';
-import { Mail, ArrowUp } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 
 function Home({ products, favorites, toggleFavorite }) {
     const [searchQuery, setSearchQuery] = useState('');
@@ -98,9 +98,6 @@ function Home({ products, favorites, toggleFavorite }) {
                         </span>
                     </div>
                     <div className="header-nav">
-                        <Link to="/contact" className="nav-link" aria-label="Contact Us">
-                            <Mail size={18} /> Contact
-                        </Link>
                         <Link to="/admin" className="admin-link">Admin</Link>
                     </div>
                 </div>

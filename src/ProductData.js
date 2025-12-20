@@ -19,7 +19,7 @@ export const products = [
     id: 3,
     title: "Deep Work",
     author: "Cal Newport",
-    image: "https://covers.openlibrary.org/b/isbn/9781455586691-L.jpg",
+    image: "https://m.media-amazon.com/images/I/61zt25yYrCL.jpg",
     affiliateLinkIN: "https://amzn.to/4j2IQyY",
     affiliateLinkUS: "https://amzn.to/4s2S7es"
   },
@@ -91,7 +91,7 @@ export const products = [
     id: 12,
     title: "Dopamine Detox",
     author: "Thibaut Meurisse",
-    image: "https://covers.openlibrary.org/b/isbn/9788194724988-L.jpg",
+    image: "https://rukminim2.flixcart.com/image/480/640/xif0q/book/0/r/e/dopamine-detox-a-simple-guide-to-eliminate-distractions-and-original-imahfchkdcfrmq9m.jpeg?q=90",
     affiliateLinkIN: "https://amzn.to/4sl8CCX",
     affiliateLinkUS: "https://amzn.to/3YxU3hl"
   },
@@ -155,7 +155,7 @@ export const products = [
     id: 20,
     title: "The Compound Effect",
     author: "Darren Hardy",
-    image: "https://covers.openlibrary.org/b/isbn/9781593157241-L.jpg",
+    image: "https://m.media-amazon.com/images/I/610QDSRlLYL._AC_UF1000,1000_QL80_.jpg",
     affiliateLinkIN: "https://amzn.to/3YlIdXT",
     affiliateLinkUS: "https://amzn.to/48Ll5Ig"
   },
@@ -227,7 +227,7 @@ export const products = [
     id: 29,
     title: "The Power of Your Subconscious Mind",
     author: "Joseph Murphy",
-    image: "https://covers.openlibrary.org/b/isbn/9780553270114-L.jpg",
+    image: "https://m.media-amazon.com/images/I/81gTwYAhU7L.jpg",
     affiliateLinkIN: "https://amzn.to/4qpw7ZH",
     affiliateLinkUS: "https://amzn.to/48QaSKw"
   },
@@ -267,7 +267,7 @@ export const products = [
     id: 34,
     title: "Financial Freedom",
     author: "Grant Sabatier",
-    image: "https://covers.openlibrary.org/b/isbn/9780525534594-L.jpg",
+    image: "https://m.media-amazon.com/images/I/71XTfxizAvL._AC_UF1000,1000_QL80_.jpg",
     affiliateLinkIN: "https://amzn.to/3Y5mLGs",
     affiliateLinkUS: "https://amzn.to/3L4WDZ7"
   },
@@ -291,7 +291,7 @@ export const products = [
     id: 37,
     title: "Make Time",
     author: "Jake Knapp & John Zeratsky",
-    image: "https://covers.openlibrary.org/b/isbn/9780525573425-L.jpg",
+    image: "https://m.media-amazon.com/images/I/8127OzsAQVL.jpg",
     affiliateLinkIN: "https://amzn.to/4s5tVb9",
     affiliateLinkUS: "https://amzn.to/4s3k31X"
   },
@@ -331,7 +331,7 @@ export const products = [
     id: 42,
     title: "Tiny Habits",
     author: "BJ Fogg",
-    image: "https://covers.openlibrary.org/b/isbn/9780358003328-L.jpg",
+    image: "https://m.media-amazon.com/images/I/710yLKBRsEL._UF1000,1000_QL80_.jpg",
     affiliateLinkIN: "https://amzn.to/3Y5wwo0",
     affiliateLinkUS: "https://amzn.to/4p6Ha91"
   },
@@ -347,7 +347,7 @@ export const products = [
     id: 44,
     title: "You Can",
     author: "George Matthew Adams",
-    image: "https://covers.openlibrary.org/b/isbn/9789357025331-L.jpg",
+    image: "https://rekhtabooks.com/cdn/shop/products/9789389931846.jpg?v=1688454074",
     affiliateLinkIN: "https://amzn.to/4pHalR2",
     affiliateLinkUS: "https://amzn.to/4pOGGWk"
   },
@@ -379,7 +379,7 @@ export const products = [
     id: 48,
     title: "The Buffett Way",
     author: "Robert G. Hagstrom",
-    image: "https://covers.openlibrary.org/b/isbn/9781118793992-L.jpg",
+    image: "https://m.media-amazon.com/images/I/71MDz2FR1dL._AC_UF1000,1000_QL80_.jpg",
     affiliateLinkIN: "https://amzn.to/3KMYBxl",
     affiliateLinkUS: "https://amzn.to/3XZovRn"
   },
@@ -387,7 +387,7 @@ export const products = [
     id: 49,
     title: "The Art of Spending Money",
     author: "Morgan Housel",
-    image: "https://covers.openlibrary.org/b/isbn/9781804091890-L.jpg",
+    image: "https://img1.od-cdn.com/ImageType-400/2283-1/%7B5E5EE31C-E329-44CB-9CD9-30907DD9C2DD%7DIMG400.JPG",
     affiliateLinkIN: "https://amzn.to/3Y5q6Fi",
     affiliateLinkUS: "https://amzn.to/4qhwipH"
   },
@@ -395,7 +395,7 @@ export const products = [
     id: 50,
     title: "Rich Routines",
     author: "Steve Houghton",
-    image: "https://covers.openlibrary.org/b/isbn/9798991017800-L.jpg",
+    image: "https://m.media-amazon.com/images/I/81JOXYezNXL._UF1000,1000_QL80_.jpg",
     affiliateLinkIN: "https://amzn.to/48YCw6R",
     affiliateLinkUS: "https://amzn.to/3KEopf6"
   }

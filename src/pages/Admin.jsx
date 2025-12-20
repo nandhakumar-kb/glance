@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Trash2, Edit, Plus, Save, X, ArrowLeft, Lock } from 'lucide-react';
+import { Trash2, Edit, Plus, Save, X, ArrowLeft, Lock, Eye, EyeOff, LogOut } from 'lucide-react';
 import '../index.css';
 
 function Admin({ products, setProducts }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [passwordInput, setPasswordInput] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
+    const [loginError, setLoginError] = useState('');
     const [editingId, setEditingId] = useState(null);
     const [formData, setFormData] = useState({});
     const [isAdding, setIsAdding] = useState(false);
@@ -14,29 +16,57 @@ function Admin({ products, setProducts }) {
         e.preventDefault();
         if (passwordInput === 'admin123') {
             setIsAuthenticated(true);
+            setLoginError('');
         } else {
-            alert('Incorrect password');
+            setLoginError('Incorrect password. Please try again.');
+            setPasswordInput('');
         }
+    };
+
+    const handleLogout = () => {
+        setIsAuthenticated(false);
+        setPasswordInput('');
     };
 
     if (!isAuthenticated) {
         return (
-            <div className="app-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh' }}>
-                <div style={{ background: 'var(--card-bg)', padding: '2rem', borderRadius: '12px', border: '1px solid var(--border-color)', textAlign: 'center', width: '100%', maxWidth: '350px' }}>
-                    <Lock size={48} color="var(--primary-gold)" style={{ marginBottom: '1rem' }} />
-                    <h2 style={{ marginBottom: '1.5rem', color: '#fff' }}>Admin Login</h2>
-                    <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                        <input
-                            type="password"
-                            value={passwordInput}
-                            onChange={(e) => setPasswordInput(e.target.value)}
-                            placeholder="Enter Password"
-                            style={{ padding: '0.8rem', borderRadius: '6px', border: '1px solid var(--border-color)', background: '#000', color: '#fff' }}
-                        />
-                        <button type="submit" className="primary-button" style={{ justifyContent: 'center' }}>Login</button>
+            <div className="admin-login-container">
+                <div className="login-card">
+                    <div className="login-header">
+                        <Lock size={48} className="login-icon" />
+                        <h1>Admin Access</h1>
+                        <p>Enter your credentials to manage the book collection</p>
+                    </div>
+                    <form onSubmit={handleLogin} className="login-form">
+                        <div className="form-group">
+                            <label>Password</label>
+                            <div className="password-input-wrapper">
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    value={passwordInput}
+                                    onChange={(e) => {
+                                        setPasswordInput(e.target.value);
+                                        setLoginError('');
+                                    }}
+                                    placeholder="Enter your password"
+                                    className={loginError ? 'error' : ''}
+                                />
+                                <button 
+                                    type="button" 
+                                    className="toggle-password"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                >
+                                    {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                                </button>
+                            </div>
+                            {loginError && <span className="error-message">{loginError}</span>}
+                        </div>
+                        <button type="submit" className="login-button">
+                            <Lock size={18} /> Login
+                        </button>
                     </form>
-                    <div style={{ marginTop: '1rem' }}>
-                        <Link to="/" style={{ color: '#888', textDecoration: 'none', fontSize: '0.9rem' }}>← Back to Home</Link>
+                    <div className="login-footer">
+                        <Link to="/" className="back-home-link">← Back to Home</Link>
                     </div>
                 </div>
             </div>
@@ -88,187 +118,675 @@ function Admin({ products, setProducts }) {
     };
 
     return (
-        <div className="app-container" style={{ padding: '2rem' }}>
-            <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                    <Link to="/" className="back-link"><ArrowLeft size={24} color="var(--primary-gold)" /></Link>
-                    <h1 style={{ margin: 0 }}>Admin Dashboard</h1>
+        <div className="admin-dashboard">
+            <div className="admin-header">
+                <div className="admin-header-left">
+                    <Link to="/" className="admin-back-btn">
+                        <ArrowLeft size={20} /> Back to Site
+                    </Link>
+                    <h1>Admin Dashboard</h1>
+                    <span className="product-count">{products.length} Books</span>
                 </div>
-                <button onClick={startAdd} className="cta-button" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <Plus size={18} /> Add New Book
-                </button>
-            </header>
+                <div className="admin-header-right">
+                    <button onClick={startAdd} className="add-product-btn">
+                        <Plus size={20} /> Add Book
+                    </button>
+                    <button onClick={handleLogout} className="logout-btn">
+                        <LogOut size={18} /> Logout
+                    </button>
+                </div>
+            </div>
 
             {/* Edit/Add Form Modal Overlay */}
             {(editingId || isAdding) && (
-                <div className="modal-overlay">
-                    <div className="modal-content">
-                        <h2>{isAdding ? 'Add New Book' : 'Edit Book'}</h2>
-                        <div className="form-group">
-                            <label>Title</label>
-                            <input name="title" value={formData.title} onChange={handleChange} placeholder="Book Title" />
+                <div className="modal-overlay" onClick={cancelEdit}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <div className="modal-header">
+                            <h2>{isAdding ? 'Add New Book' : 'Edit Book'}</h2>
+                            <button onClick={cancelEdit} className="close-modal-btn">
+                                <X size={24} />
+                            </button>
                         </div>
-                        <div className="form-group">
-                            <label>Author</label>
-                            <input name="author" value={formData.author} onChange={handleChange} placeholder="Author Name" />
+                        <div className="modal-body">
+                            <div className="form-group">
+                                <label>Title</label>
+                                <input name="title" value={formData.title} onChange={handleChange} placeholder="Enter book title" />
+                            </div>
+                            <div className="form-group">
+                                <label>Author</label>
+                                <input name="author" value={formData.author} onChange={handleChange} placeholder="Enter author name" />
+                            </div>
+                            <div className="form-group">
+                                <label>Cover Image URL</label>
+                                <input name="image" value={formData.image} onChange={handleChange} placeholder="https://example.com/image.jpg" />
+                                {formData.image && (
+                                    <div className="image-preview">
+                                        <img src={formData.image} alt="Preview" onError={(e) => e.target.style.display = 'none'} />
+                                    </div>
+                                )}
+                            </div>
+                            <div className="form-group">
+                                <label>India Affiliate Link</label>
+                                <input name="affiliateLinkIN" value={formData.affiliateLinkIN} onChange={handleChange} placeholder="https://amzn.to/..." />
+                            </div>
+                            <div className="form-group">
+                                <label>USA Affiliate Link</label>
+                                <input name="affiliateLinkUS" value={formData.affiliateLinkUS} onChange={handleChange} placeholder="https://amzn.to/..." />
+                            </div>
                         </div>
-                        <div className="form-group">
-                            <label>Cover Image URL</label>
-                            <input name="image" value={formData.image} onChange={handleChange} placeholder="https://..." />
-                        </div>
-                        <div className="form-group">
-                            <label>India Affiliate Link</label>
-                            <input name="affiliateLinkIN" value={formData.affiliateLinkIN} onChange={handleChange} placeholder="https://amzn.to/..." />
-                        </div>
-                        <div className="form-group">
-                            <label>USA Affiliate Link</label>
-                            <input name="affiliateLinkUS" value={formData.affiliateLinkUS} onChange={handleChange} placeholder="https://amzn.to/..." />
-                        </div>
-                        <div className="modal-actions">
-                            <button onClick={cancelEdit} className="secondary-button">Cancel</button>
-                            <button onClick={saveProduct} className="primary-button"><Save size={16} /> Save Product</button>
+                        <div className="modal-footer">
+                            <button onClick={cancelEdit} className="cancel-btn">
+                                <X size={16} /> Cancel
+                            </button>
+                            <button onClick={saveProduct} className="save-btn">
+                                <Save size={16} /> Save Book
+                            </button>
                         </div>
                     </div>
                 </div>
             )}
 
             {/* Product List Table */}
-            <div className="admin-table-container">
-                <table className="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Cover</th>
-                            <th>Title / Author</th>
-                            <th>Links</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            <div className="admin-products-container">
+                {products.length === 0 ? (
+                    <div className="empty-state">
+                        <Plus size={48} />
+                        <h3>No Books Added Yet</h3>
+                        <p>Start building your collection by adding your first book.</p>
+                        <button onClick={startAdd} className="add-product-btn">
+                            <Plus size={20} /> Add First Book
+                        </button>
+                    </div>
+                ) : (
+                    <div className="products-grid">
                         {products.map(product => (
-                            <tr key={product.id}>
-                                <td>
-                                    <img src={product.image} alt={product.title} style={{ width: '40px', height: '60px', objectFit: 'cover', borderRadius: '4px' }} />
-                                </td>
-                                <td>
-                                    <strong>{product.title}</strong>
-                                    <div style={{ color: '#888', fontSize: '0.9rem' }}>{product.author}</div>
-                                </td>
-                                <td>
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', fontSize: '0.8rem' }}>
-                                        <a href={product.affiliateLinkIN} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary-gold)' }}>IN Link</a>
-                                        <a href={product.affiliateLinkUS} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary-gold)' }}>US Link</a>
+                            <div key={product.id} className="admin-product-card">
+                                <div className="admin-card-image">
+                                    <img src={product.image} alt={product.title} />
+                                </div>
+                                <div className="admin-card-content">
+                                    <h3>{product.title}</h3>
+                                    <p className="author">{product.author}</p>
+                                    <div className="affiliate-links">
+                                        <a href={product.affiliateLinkIN} target="_blank" rel="noopener noreferrer">
+                                            India Link →
+                                        </a>
+                                        <a href={product.affiliateLinkUS} target="_blank" rel="noopener noreferrer">
+                                            USA Link →
+                                        </a>
                                     </div>
-                                </td>
-                                <td>
-                                    <div style={{ display: 'flex', gap: '1rem' }}>
-                                        <button onClick={() => startEdit(product)} className="icon-button"><Edit size={20} /></button>
-                                        <button onClick={() => deleteProduct(product.id)} className="icon-button delete"><Trash2 size={20} /></button>
-                                    </div>
-                                </td>
-                            </tr>
+                                </div>
+                                <div className="admin-card-actions">
+                                    <button onClick={() => startEdit(product)} className="edit-btn">
+                                        <Edit size={18} /> Edit
+                                    </button>
+                                    <button onClick={() => deleteProduct(product.id)} className="delete-btn">
+                                        <Trash2 size={18} /> Delete
+                                    </button>
+                                </div>
+                            </div>
                         ))}
-                    </tbody>
-                </table>
+                    </div>
+                )}
             </div>
 
             <style>{`
+        /* Admin Login Styles */
+        .admin-login-container {
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: var(--bg-color);
+          padding: 2rem;
+        }
+        
+        .login-card {
+          background: var(--card-bg);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 16px;
+          padding: 3rem;
+          width: 100%;
+          max-width: 420px;
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        
+        .login-header {
+          text-align: center;
+          margin-bottom: 2rem;
+        }
+        
+        .login-icon {
+          color: var(--accent-orange);
+          margin-bottom: 1rem;
+        }
+        
+        .login-header h1 {
+          font-size: 1.75rem;
+          margin-bottom: 0.5rem;
+          color: var(--text-primary);
+        }
+        
+        .login-header p {
+          color: var(--text-secondary);
+          font-size: 0.95rem;
+        }
+        
+        .login-form {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+        
+        .password-input-wrapper {
+          position: relative;
+        }
+        
+        .password-input-wrapper input {
+          width: 100%;
+          padding: 1rem 3rem 1rem 1rem;
+          background: rgba(0, 0, 0, 0.4);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 8px;
+          color: var(--text-primary);
+          font-size: 1rem;
+          transition: all 0.3s;
+        }
+        
+        .password-input-wrapper input:focus {
+          outline: none;
+          border-color: var(--accent-blue);
+          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .password-input-wrapper input.error {
+          border-color: #ff4444;
+        }
+        
+        .toggle-password {
+          position: absolute;
+          right: 0.75rem;
+          top: 50%;
+          transform: translateY(-50%);
+          background: none;
+          border: none;
+          color: var(--text-secondary);
+          cursor: pointer;
+          padding: 0.5rem;
+          display: flex;
+          align-items: center;
+          transition: color 0.2s;
+        }
+        
+        .toggle-password:hover {
+          color: var(--text-primary);
+        }
+        
+        .error-message {
+          color: #ff4444;
+          font-size: 0.85rem;
+          margin-top: 0.5rem;
+          display: block;
+        }
+        
+        .login-button {
+          padding: 1rem;
+          background: linear-gradient(135deg, var(--accent-orange), var(--accent-blue));
+          color: white;
+          border: none;
+          border-radius: 8px;
+          font-size: 1rem;
+          font-weight: 600;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .login-button:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 30px rgba(249, 115, 22, 0.3);
+        }
+        
+        .login-footer {
+          margin-top: 1.5rem;
+          text-align: center;
+        }
+        
+        .back-home-link {
+          color: var(--text-secondary);
+          text-decoration: none;
+          font-size: 0.9rem;
+          transition: color 0.2s;
+        }
+        
+        .back-home-link:hover {
+          color: var(--text-primary);
+        }
+
+        /* Admin Dashboard Styles */
+        .admin-dashboard {
+          min-height: 100vh;
+          background: var(--bg-color);
+          padding: 2rem;
+        }
+        
+        .admin-header {
+          background: var(--card-bg);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          border-radius: 16px;
+          padding: 1.5rem 2rem;
+          margin-bottom: 2rem;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          flex-wrap: wrap;
+          gap: 1rem;
+        }
+        
+        .admin-header-left {
+          display: flex;
+          align-items: center;
+          gap: 1.5rem;
+          flex-wrap: wrap;
+        }
+        
+        .admin-header-left h1 {
+          font-size: 1.75rem;
+          margin: 0;
+          color: var(--text-primary);
+        }
+        
+        .product-count {
+          background: rgba(249, 115, 22, 0.1);
+          color: var(--accent-orange);
+          padding: 0.4rem 0.8rem;
+          border-radius: 6px;
+          font-size: 0.85rem;
+          font-weight: 600;
+        }
+        
+        .admin-header-right {
+          display: flex;
+          gap: 1rem;
+        }
+        
+        .admin-back-btn {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.6rem 1.2rem;
+          background: rgba(255, 255, 255, 0.05);
+          color: var(--text-secondary);
+          text-decoration: none;
+          border-radius: 8px;
+          font-size: 0.95rem;
+          transition: all 0.2s;
+        }
+        
+        .admin-back-btn:hover {
+          background: rgba(255, 255, 255, 0.1);
+          color: var(--text-primary);
+        }
+        
+        .add-product-btn {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.75rem 1.5rem;
+          background: linear-gradient(135deg, var(--accent-orange), #ff8800);
+          color: white;
+          border: none;
+          border-radius: 8px;
+          font-size: 0.95rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .add-product-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 30px rgba(249, 115, 22, 0.3);
+        }
+        
+        .logout-btn {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.75rem 1.2rem;
+          background: rgba(255, 68, 68, 0.1);
+          color: #ff4444;
+          border: 1px solid rgba(255, 68, 68, 0.2);
+          border-radius: 8px;
+          font-size: 0.95rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        
+        .logout-btn:hover {
+          background: rgba(255, 68, 68, 0.2);
+          border-color: #ff4444;
+        }
+
+        /* Products Grid */
+        .admin-products-container {
+          background: var(--card-bg);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          border-radius: 16px;
+          padding: 2rem;
+          min-height: 400px;
+        }
+        
+        .empty-state {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 4rem 2rem;
+          text-align: center;
+          color: var(--text-secondary);
+        }
+        
+        .empty-state svg {
+          margin-bottom: 1rem;
+          opacity: 0.5;
+        }
+        
+        .empty-state h3 {
+          color: var(--text-primary);
+          margin-bottom: 0.5rem;
+          font-size: 1.25rem;
+        }
+        
+        .empty-state p {
+          margin-bottom: 1.5rem;
+        }
+        
+        .products-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          gap: 1.5rem;
+        }
+        
+        .admin-product-card {
+          background: rgba(255, 255, 255, 0.02);
+          border: 1px solid rgba(255, 255, 255, 0.05);
+          border-radius: 12px;
+          overflow: hidden;
+          transition: all 0.3s;
+        }
+        
+        .admin-product-card:hover {
+          border-color: rgba(255, 255, 255, 0.1);
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .admin-card-image {
+          width: 100%;
+          aspect-ratio: 2/3;
+          overflow: hidden;
+          background: #000;
+        }
+        
+        .admin-card-image img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+        
+        .admin-card-content {
+          padding: 1.25rem;
+        }
+        
+        .admin-card-content h3 {
+          font-size: 1.1rem;
+          margin-bottom: 0.25rem;
+          color: var(--text-primary);
+          line-height: 1.3;
+        }
+        
+        .admin-card-content .author {
+          color: var(--text-secondary);
+          font-size: 0.9rem;
+          font-style: italic;
+          margin-bottom: 1rem;
+        }
+        
+        .affiliate-links {
+          display: flex;
+          gap: 1rem;
+          flex-wrap: wrap;
+        }
+        
+        .affiliate-links a {
+          color: var(--accent-blue);
+          font-size: 0.85rem;
+          text-decoration: none;
+          transition: color 0.2s;
+        }
+        
+        .affiliate-links a:hover {
+          color: var(--accent-orange);
+        }
+        
+        .admin-card-actions {
+          display: flex;
+          gap: 0.5rem;
+          padding: 1rem 1.25rem;
+          border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .edit-btn, .delete-btn {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.5rem;
+          padding: 0.6rem 1rem;
+          border: none;
+          border-radius: 6px;
+          font-size: 0.9rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        
+        .edit-btn {
+          background: rgba(59, 130, 246, 0.1);
+          color: var(--accent-blue);
+        }
+        
+        .edit-btn:hover {
+          background: rgba(59, 130, 246, 0.2);
+        }
+        
+        .delete-btn {
+          background: rgba(255, 68, 68, 0.1);
+          color: #ff4444;
+        }
+        
+        .delete-btn:hover {
+          background: rgba(255, 68, 68, 0.2);
+        }
+
+        /* Modal Styles */
         .modal-overlay {
           position: fixed;
-          top: 0; left: 0; right: 0; bottom: 0;
-          background: rgba(0,0,0,0.8);
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.85);
+          backdrop-filter: blur(5px);
           display: flex;
           justify-content: center;
           align-items: center;
           z-index: 1000;
+          padding: 1rem;
         }
+        
         .modal-content {
           background: var(--card-bg);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 16px;
+          width: 100%;
+          max-width: 550px;
+          max-height: 90vh;
+          overflow-y: auto;
+          box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 1.5rem 2rem;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .modal-header h2 {
+          margin: 0;
+          font-size: 1.5rem;
+          color: var(--text-primary);
+        }
+        
+        .close-modal-btn {
+          background: rgba(255, 255, 255, 0.05);
+          border: none;
+          color: var(--text-secondary);
+          cursor: pointer;
+          padding: 0.5rem;
+          border-radius: 6px;
+          display: flex;
+          align-items: center;
+          transition: all 0.2s;
+        }
+        
+        .close-modal-btn:hover {
+          background: rgba(255, 255, 255, 0.1);
+          color: var(--text-primary);
+        }
+        
+        .modal-body {
           padding: 2rem;
-          border-radius: 12px;
-          border: 1px solid var(--border-color);
-          width: 90%;
-          max-width: 500px;
           display: flex;
           flex-direction: column;
-          gap: 1rem;
+          gap: 1.25rem;
         }
+        
         .form-group {
           display: flex;
           flex-direction: column;
           gap: 0.5rem;
         }
-        .form-group input {
-          padding: 0.8rem;
-          border-radius: 6px;
-          border: 1px solid var(--border-color);
-          background: #000;
-          color: #fff;
+        
+        .form-group label {
+          font-size: 0.9rem;
+          font-weight: 600;
+          color: var(--text-secondary);
         }
-        .modal-actions {
+        
+        .form-group input {
+          padding: 0.9rem;
+          background: rgba(0, 0, 0, 0.4);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 8px;
+          color: var(--text-primary);
+          font-size: 1rem;
+          transition: all 0.3s;
+        }
+        
+        .form-group input:focus {
+          outline: none;
+          border-color: var(--accent-blue);
+          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .image-preview {
+          margin-top: 0.5rem;
+          border-radius: 8px;
+          overflow: hidden;
+          background: #000;
+          max-width: 200px;
+        }
+        
+        .image-preview img {
+          width: 100%;
+          height: auto;
+        }
+        
+        .modal-footer {
           display: flex;
           justify-content: flex-end;
           gap: 1rem;
-          margin-top: 1rem;
+          padding: 1.5rem 2rem;
+          border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .secondary-button {
-          background: transparent;
-          border: 1px solid var(--border-color);
-          color: #ccc;
-          padding: 0.5rem 1rem;
-          border-radius: 6px;
-          cursor: pointer;
-        }
-        .primary-button {
-          background: var(--primary-gold);
-          color: #000;
-          border: none;
-          padding: 0.5rem 1rem;
-          border-radius: 6px;
-          cursor: pointer;
+        
+        .cancel-btn {
           display: flex;
           align-items: center;
-          gap: 5px;
-          font-weight: bold;
-        }
-        .admin-table {
-          width: 100%;
-          border-collapse: collapse;
-          color: #fff;
-        }
-        .admin-table th {
-          text-align: left;
-          padding: 1rem;
-          border-bottom: 2px solid var(--border-color);
-          color: var(--primary-gold);
-        }
-        .admin-table td {
-          padding: 1rem;
-          border-bottom: 1px solid var(--border-color);
-        }
-        .icon-button {
-          background: none;
-          border: none;
-          color: #ccc;
+          gap: 0.5rem;
+          padding: 0.75rem 1.5rem;
+          background: rgba(255, 255, 255, 0.05);
+          color: var(--text-secondary);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 8px;
+          font-size: 0.95rem;
           cursor: pointer;
-          transition: color 0.2s;
+          transition: all 0.2s;
         }
-        .icon-button:hover {
-          color: var(--primary-gold);
+        
+        .cancel-btn:hover {
+          background: rgba(255, 255, 255, 0.1);
+          color: var(--text-primary);
         }
-        .icon-button.delete:hover {
-          color: #ff4444;
+        
+        .save-btn {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.75rem 1.5rem;
+          background: linear-gradient(135deg, var(--accent-orange), var(--accent-blue));
+          color: white;
+          border: none;
+          border-radius: 8px;
+          font-size: 0.95rem;
+          font-weight: 600;
+          cursor: pointer;
+          transition: transform 0.2s, box-shadow 0.2s;
         }
-        .back-link {
-            display: flex;
-            align-items: center;
+        
+        .save-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 10px 30px rgba(249, 115, 22, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+          .admin-header {
+            flex-direction: column;
+            align-items: stretch;
+          }
+          
+          .admin-header-left {
             justify-content: center;
-            background: var(--card-bg);
-            padding: 8px;
-            border-radius: 50%;
-            transition: transform 0.2s;
-        }
-        .back-link:hover {
-            transform: scale(1.1);
+          }
+          
+          .admin-header-right {
+            flex-direction: column;
+          }
+          
+          .products-grid {
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+          }
+          
+          .login-card {
+            padding: 2rem;
+          }
         }
       `}</style>
         </div>

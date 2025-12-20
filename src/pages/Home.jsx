@@ -7,7 +7,6 @@ import { ArrowUp } from 'lucide-react';
 
 function Home({ products, favorites, toggleFavorite }) {
     const [searchQuery, setSearchQuery] = useState('');
-    const [sortBy, setSortBy] = useState('default');
     const [showScrollTop, setShowScrollTop] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [searchSuggestions, setSearchSuggestions] = useState([]);
@@ -44,38 +43,18 @@ function Home({ products, favorites, toggleFavorite }) {
         }
     }, [searchQuery, products]);
 
-    // Filter and sort products
-    const getFilteredAndSortedProducts = () => {
-        let filtered = products.filter(product => {
+    // Filter products
+    const getFilteredProducts = () => {
+        return products.filter(product => {
             const query = searchQuery.toLowerCase();
             return (
                 product.title.toLowerCase().includes(query) ||
                 product.author.toLowerCase().includes(query)
             );
         });
-
-        // Sort logic
-        switch (sortBy) {
-            case 'title-asc':
-                filtered.sort((a, b) => a.title.localeCompare(b.title));
-                break;
-            case 'title-desc':
-                filtered.sort((a, b) => b.title.localeCompare(a.title));
-                break;
-            case 'author':
-                filtered.sort((a, b) => a.author.localeCompare(b.author));
-                break;
-            case 'favorites':
-                filtered = filtered.filter(p => favorites.includes(p.id));
-                break;
-            default:
-                break;
-        }
-
-        return filtered;
     };
 
-    const filteredProducts = getFilteredAndSortedProducts();
+    const filteredProducts = getFilteredProducts();
 
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -156,18 +135,6 @@ function Home({ products, favorites, toggleFavorite }) {
                 <div id="collection" className="section-header">
                     <h2>Book Collection</h2>
                     <div className="section-controls">
-                        <select 
-                            value={sortBy} 
-                            onChange={(e) => setSortBy(e.target.value)}
-                            className="sort-dropdown"
-                            aria-label="Sort books"
-                        >
-                            <option value="default">Default Order</option>
-                            <option value="title-asc">Title (A-Z)</option>
-                            <option value="title-desc">Title (Z-A)</option>
-                            <option value="author">Author</option>
-                            <option value="favorites">Favorites Only</option>
-                        </select>
                         <span className="book-count">{filteredProducts.length} {filteredProducts.length === 1 ? 'Book' : 'Books'}</span>
                     </div>
                 </div>

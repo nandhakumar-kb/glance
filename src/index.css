@@ -669,26 +669,6 @@ body {
   gap: 1rem;
 }
 
-.sort-dropdown {
-  padding: 0.6rem 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  color: var(--text-primary);
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.sort-dropdown:hover {
-  background: rgba(255, 255, 255, 0.1);
-}
-
-.sort-dropdown:focus {
-  outline: none;
-  border-color: var(--accent-blue);
-}
-
 /* Product Card Actions */
 .card-actions-top {
   position: absolute;
@@ -854,10 +834,6 @@ a:focus-visible {
     align-items: flex-start;
     width: 100%;
     gap: 0.75rem;
-  }
-
-  .sort-dropdown {
-    width: 100%;
   }
 }
 

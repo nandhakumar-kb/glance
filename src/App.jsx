@@ -9,21 +9,32 @@ import { products as initialProducts } from './ProductData';
 import './index.css';
 
 function App() {
+  // Force reset localStorage if it's corrupted or empty
+  const BOOKS_VERSION = '1.0';
+  
   const [products, setProducts] = useState(() => {
-    // Initialize state from local storage or fallback to default data
+    const savedVersion = localStorage.getItem('booksVersion');
     const saved = localStorage.getItem('products');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        // Validate that we have products
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed;
-        }
-      } catch (e) {
-        console.error("Failed to parse products from local storage", e);
-      }
+    
+    // If version mismatch or no products, reset to initial
+    if (savedVersion !== BOOKS_VERSION || !saved) {
+      console.log('Initializing books from ProductData');
+      localStorage.setItem('booksVersion', BOOKS_VERSION);
+      localStorage.setItem('products', JSON.stringify(initialProducts));
+      return initialProducts;
     }
-    // Always fallback to initialProducts
+    
+    try {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    } catch (e) {
+      console.error("Failed to parse products", e);
+    }
+    
+    // Fallback to initial products
+    localStorage.setItem('products', JSON.stringify(initialProducts));
     return initialProducts;
   });
 

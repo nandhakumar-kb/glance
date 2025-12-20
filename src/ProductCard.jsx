@@ -4,6 +4,7 @@ import { useToast } from './context/ToastContext';
 
 const ProductCard = ({ product, isFavorite, onToggleFavorite }) => {
     const { showToast } = useToast();
+    const [imageLoaded, setImageLoaded] = React.useState(false);
 
     const handleShare = async () => {
         const bookUrl = window.location.href;
@@ -70,10 +71,13 @@ const ProductCard = ({ product, isFavorite, onToggleFavorite }) => {
                 </button>
             </div>
             <div className="image-container">
+                {!imageLoaded && <div className="image-skeleton" />}
                 <img 
                     src={product.image} 
                     alt={`${product.title} book cover`}
                     loading="lazy"
+                    onLoad={() => setImageLoaded(true)}
+                    style={{ opacity: imageLoaded ? 1 : 0 }}
                 />
             </div>
             <div className="card-content">

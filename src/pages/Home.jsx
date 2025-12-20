@@ -8,11 +8,22 @@ import { useToast } from '../context/ToastContext';
 function Home({ products, favorites, toggleFavorite }) {
     const { showToast } = useToast();
     const [searchQuery, setSearchQuery] = useState('');
+    const [debouncedQuery, setDebouncedQuery] = useState('');
     const [showScrollTop, setShowScrollTop] = useState(false);
     const [searchSuggestions, setSearchSuggestions] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
+    const [selectedSuggestion, setSelectedSuggestion] = useState(-1);
+    const [sortBy, setSortBy] = useState('default');
     const touchStartX = useRef(0);
     const touchEndX = useRef(0);
+
+    // Debounce search query
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedQuery(searchQuery);
+        }, 300);
+        return () => clearTimeout(timer);
+    }, [searchQuery]);
 
     // Scroll to top button visibility
     useEffect(() => {
@@ -39,15 +50,30 @@ function Home({ products, favorites, toggleFavorite }) {
         }
     }, [searchQuery, products]);
 
-    // Filter products
+    // Filter and sort products
     const getFilteredProducts = () => {
-        return products.filter(product => {
-            const query = searchQuery.toLowerCase();
+        let filtered = products.filter(product => {
+            const query = debouncedQuery.toLowerCase();
             return (
                 product.title.toLowerCase().includes(query) ||
                 product.author.toLowerCase().includes(query)
             );
         });
+
+        // Apply sorting
+        switch(sortBy) {
+            case 'title':
+                filtered.sort((a, b) => a.title.localeCompare(b.title));
+                break;
+            case 'author':
+                filtered.sort((a, b) => a.author.localeCompare(b.author));
+                break;
+            default:
+                // Keep original order
+                break;
+        }
+
+        return filtered;
     };
 
     const filteredProducts = getFilteredProducts();
@@ -59,6 +85,36 @@ function Home({ products, favorites, toggleFavorite }) {
     const handleSuggestionClick = (suggestion) => {
         setSearchQuery(suggestion);
         setShowSuggestions(false);
+        setSelectedSuggestion(-1);
+    };
+
+    const handleKeyDown = (e) => {
+        if (!showSuggestions || searchSuggestions.length === 0) return;
+
+        switch(e.key) {
+            case 'ArrowDown':
+                e.preventDefault();
+                setSelectedSuggestion(prev => 
+                    prev < searchSuggestions.length - 1 ? prev + 1 : prev
+                );
+                break;
+            case 'ArrowUp':
+                e.preventDefault();
+                setSelectedSuggestion(prev => prev > 0 ? prev - 1 : -1);
+                break;
+            case 'Enter':
+                e.preventDefault();
+                if (selectedSuggestion >= 0) {
+                    handleSuggestionClick(searchSuggestions[selectedSuggestion]);
+                }
+                break;
+            case 'Escape':
+                setShowSuggestions(false);
+                setSelectedSuggestion(-1);
+                break;
+            default:
+                break;
+        }
     };
 
     const handleShareWebsite = async () => {
@@ -169,17 +225,25 @@ function Home({ products, favorites, toggleFavorite }) {
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
                             onFocus={() => setShowSuggestions(true)}
-                            onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                            onBlur={() => setTimeout(() => {
+                                setShowSuggestions(false);
+                                setSelectedSuggestion(-1);
+                            }, 200)}
+                            onKeyDown={handleKeyDown}
                             className="search-bar"
                             aria-label="Search books"
+                            aria-autocomplete="list"
+                            aria-expanded={showSuggestions && searchSuggestions.length > 0}
                         />
                         {showSuggestions && searchSuggestions.length > 0 && (
-                            <div className="search-suggestions">
+                            <div className="search-suggestions" role="listbox">
                                 {searchSuggestions.map((suggestion, index) => (
                                     <div
                                         key={index}
-                                        className="suggestion-item"
+                                        className={`suggestion-item ${selectedSuggestion === index ? 'selected' : ''}`}
                                         onClick={() => handleSuggestionClick(suggestion)}
+                                        role="option"
+                                        aria-selected={selectedSuggestion === index}
                                     >
                                         {suggestion}
                                     </div>
@@ -199,6 +263,16 @@ function Home({ products, favorites, toggleFavorite }) {
                 <div id="collection" className="section-header">
                     <h2>Book Collection</h2>
                     <div className="section-controls">
+                        <select 
+                            value={sortBy} 
+                            onChange={(e) => setSortBy(e.target.value)}
+                            className="sort-select"
+                            aria-label="Sort books"
+                        >
+                            <option value="default">Default Order</option>
+                            <option value="title">Sort by Title</option>
+                            <option value="author">Sort by Author</option>
+                        </select>
                         <span className="book-count">{filteredProducts.length} {filteredProducts.length === 1 ? 'Book' : 'Books'}</span>
                     </div>
                 </div>

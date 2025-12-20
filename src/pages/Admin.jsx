@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Trash2, Edit, Plus, Save, X, ArrowLeft, Lock, Eye, EyeOff, LogOut } from 'lucide-react';
+import { useToast } from '../context/ToastContext';
 import '../index.css';
 import '../Admin.css';
 
 function Admin({ products, setProducts }) {
+    const { showToast } = useToast();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [passwordInput, setPasswordInput] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -18,15 +20,18 @@ function Admin({ products, setProducts }) {
         if (passwordInput === 'admin123') {
             setIsAuthenticated(true);
             setLoginError('');
+            showToast('Welcome to Admin Dashboard!', 'success');
         } else {
             setLoginError('Incorrect password. Please try again.');
             setPasswordInput('');
+            showToast('Incorrect password', 'error');
         }
     };
 
     const handleLogout = () => {
         setIsAuthenticated(false);
         setPasswordInput('');
+        showToast('Logged out successfully', 'success');
     };
 
     if (!isAuthenticated) {
@@ -104,10 +109,17 @@ function Admin({ products, setProducts }) {
     };
 
     const saveProduct = () => {
+        if (!formData.title || !formData.author) {
+            showToast('Please fill in title and author', 'error');
+            return;
+        }
+        
         if (isAdding) {
             setProducts([...products, formData]);
+            showToast('Book added successfully!', 'success');
         } else {
             setProducts(products.map(p => p.id === editingId ? formData : p));
+            showToast('Book updated successfully!', 'success');
         }
         cancelEdit();
     };
@@ -115,6 +127,7 @@ function Admin({ products, setProducts }) {
     const deleteProduct = (id) => {
         if (window.confirm('Are you sure you want to delete this book?')) {
             setProducts(products.filter(p => p.id !== id));
+            showToast('Book deleted successfully', 'success');
         }
     };
 

@@ -1,0 +1,224 @@
+.contact-page {
+  min-height: 100vh;
+  background: var(--bg-color);
+  padding: 2rem;
+}
+
+.contact-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.contact-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  transition: all 0.2s;
+  margin-bottom: 2rem;
+}
+
+.contact-back-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+}
+
+.contact-content {
+  background: var(--card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 3rem;
+}
+
+.contact-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.contact-header h1 {
+  font-size: 2.5rem;
+  background: linear-gradient(135deg, var(--accent-orange), var(--accent-blue));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1rem;
+}
+
+.contact-header p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.contact-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.contact-form label {
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 0.9rem 1.2rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-size: 1rem;
+  font-family: var(--font-family);
+  transition: all 0.3s;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  outline: none;
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.contact-submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, var(--accent-orange), var(--accent-blue));
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  margin-top: 0.5rem;
+}
+
+.contact-submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(249, 115, 22, 0.3);
+}
+
+.contact-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+}
+
+.info-card svg {
+  color: var(--accent-orange);
+  margin-bottom: 1rem;
+}
+
+.info-card h3 {
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+}
+
+.info-card p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.social-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: var(--text-secondary);
+  transition: all 0.3s;
+}
+
+.social-links a:hover {
+  background: linear-gradient(135deg, var(--accent-orange), var(--accent-blue));
+  color: white;
+  border-color: transparent;
+  transform: translateY(-3px);
+}
+
+@media (max-width: 900px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .contact-content {
+    padding: 2rem;
+  }
+
+  .contact-header h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .contact-page {
+    padding: 1rem;
+  }
+
+  .contact-content {
+    padding: 1.5rem;
+  }
+
+  .contact-header {
+    margin-bottom: 2rem;
+  }
+
+  .contact-header h1 {
+    font-size: 1.75rem;
+  }
+
+  .info-card {
+    padding: 1.5rem;
+  }
+}

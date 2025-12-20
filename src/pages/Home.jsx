@@ -1,18 +1,92 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProductCard from '../ProductCard';
+import LoadingCard from '../components/LoadingCard';
+import { useTheme } from '../context/ThemeContext';
 import '../index.css';
 import { Link } from 'react-router-dom';
+import { Sun, Moon, Mail, ArrowUp } from 'lucide-react';
 
-function Home({ products }) {
+function Home({ products, favorites, toggleFavorite }) {
+    const { theme, toggleTheme } = useTheme();
     const [searchQuery, setSearchQuery] = useState('');
+    const [sortBy, setSortBy] = useState('default');
+    const [showScrollTop, setShowScrollTop] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [searchSuggestions, setSearchSuggestions] = useState([]);
+    const [showSuggestions, setShowSuggestions] = useState(false);
 
-    const filteredProducts = products.filter(product => {
-        const query = searchQuery.toLowerCase();
-        return (
-            product.title.toLowerCase().includes(query) ||
-            product.author.toLowerCase().includes(query)
-        );
-    });
+    // Simulate initial loading
+    useEffect(() => {
+        const timer = setTimeout(() => setIsLoading(false), 1000);
+        return () => clearTimeout(timer);
+    }, []);
+
+    // Scroll to top button visibility
+    useEffect(() => {
+        const handleScroll = () => {
+            setShowScrollTop(window.scrollY > 400);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    // Search suggestions
+    useEffect(() => {
+        if (searchQuery.length > 1) {
+            const suggestions = products
+                .filter(p => 
+                    p.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    p.author.toLowerCase().includes(searchQuery.toLowerCase())
+                )
+                .slice(0, 5)
+                .map(p => p.title);
+            setSearchSuggestions(suggestions);
+        } else {
+            setSearchSuggestions([]);
+        }
+    }, [searchQuery, products]);
+
+    // Filter and sort products
+    const getFilteredAndSortedProducts = () => {
+        let filtered = products.filter(product => {
+            const query = searchQuery.toLowerCase();
+            return (
+                product.title.toLowerCase().includes(query) ||
+                product.author.toLowerCase().includes(query)
+            );
+        });
+
+        // Sort logic
+        switch (sortBy) {
+            case 'title-asc':
+                filtered.sort((a, b) => a.title.localeCompare(b.title));
+                break;
+            case 'title-desc':
+                filtered.sort((a, b) => b.title.localeCompare(a.title));
+                break;
+            case 'author':
+                filtered.sort((a, b) => a.author.localeCompare(b.author));
+                break;
+            case 'favorites':
+                filtered = filtered.filter(p => favorites.includes(p.id));
+                break;
+            default:
+                break;
+        }
+
+        return filtered;
+    };
+
+    const filteredProducts = getFilteredAndSortedProducts();
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const handleSuggestionClick = (suggestion) => {
+        setSearchQuery(suggestion);
+        setShowSuggestions(false);
+    };
 
     return (
         <div className="app-container">
@@ -25,13 +99,25 @@ function Home({ products }) {
                             <span className="logo-read">Read</span>
                         </span>
                     </div>
-                    <Link to="/admin" className="admin-link">Admin</Link>
+                    <div className="header-nav">
+                        <Link to="/contact" className="nav-link" aria-label="Contact Us">
+                            <Mail size={18} /> Contact
+                        </Link>
+                        <button 
+                            onClick={toggleTheme} 
+                            className="theme-toggle"
+                            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+                        >
+                            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+                        </button>
+                        <Link to="/admin" className="admin-link">Admin</Link>
+                    </div>
                 </div>
             </nav>
 
             <header className="hero-section">
                 <div className="hero-content">
-                    <div className="hero-badge">Curated Collection</div>
+                    <div className="hero-badge" role="status">Curated Collection</div>
                     <h1>Premium Reads</h1>
                     <p>Discover the books that shape successful minds. Handpicked for your personal growth and library.</p>
                     <a href="#collection" className="hero-cta">
@@ -39,19 +125,37 @@ function Home({ products }) {
                     </a>
                 </div>
                 <div className="hero-image">
-                    <img src="/hero.png" alt="Curated Collection" />
+                    <img src="/hero.png" alt="Curated book collection showcase" loading="eager" />
                 </div>
             </header>
 
             <div className="search-section">
                 <div className="search-container">
-                    <input
-                        type="text"
-                        placeholder="Search by title or author..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className="search-bar"
-                    />
+                    <div className="search-wrapper">
+                        <input
+                            type="text"
+                            placeholder="Search by title or author..."
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onFocus={() => setShowSuggestions(true)}
+                            onBlur={() => setTimeout(() => setShowSuggestions(false), 200)}
+                            className="search-bar"
+                            aria-label="Search books"
+                        />
+                        {showSuggestions && searchSuggestions.length > 0 && (
+                            <div className="search-suggestions">
+                                {searchSuggestions.map((suggestion, index) => (
+                                    <div
+                                        key={index}
+                                        className="suggestion-item"
+                                        onClick={() => handleSuggestionClick(suggestion)}
+                                    >
+                                        {suggestion}
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
                 </div>
                 {searchQuery && (
                     <div className="search-results-info">
@@ -63,25 +167,69 @@ function Home({ products }) {
             <main className="products-section">
                 <div id="collection" className="section-header">
                     <h2>Book Collection</h2>
-                    <span className="book-count">{filteredProducts.length} {filteredProducts.length === 1 ? 'Book' : 'Books'}</span>
+                    <div className="section-controls">
+                        <select 
+                            value={sortBy} 
+                            onChange={(e) => setSortBy(e.target.value)}
+                            className="sort-dropdown"
+                            aria-label="Sort books"
+                        >
+                            <option value="default">Default Order</option>
+                            <option value="title-asc">Title (A-Z)</option>
+                            <option value="title-desc">Title (Z-A)</option>
+                            <option value="author">Author</option>
+                            <option value="favorites">Favorites Only</option>
+                        </select>
+                        <span className="book-count">{filteredProducts.length} {filteredProducts.length === 1 ? 'Book' : 'Books'}</span>
+                    </div>
                 </div>
-                {filteredProducts.length > 0 ? (
+                {isLoading ? (
                     <div className="product-grid">
-                        {filteredProducts.map(product => (
-                            <ProductCard key={product.id} product={product} />
+                        {[...Array(6)].map((_, index) => (
+                            <LoadingCard key={index} />
+                        ))}
+                    </div>
+                ) : filteredProducts.length > 0 ? (
+                    <div className="product-grid">
+                        {filteredProducts.map((product, index) => (
+                            <div 
+                                key={product.id} 
+                                className="product-card-wrapper"
+                                style={{ animationDelay: `${index * 0.05}s` }}
+                            >
+                                <ProductCard 
+                                    product={product} 
+                                    isFavorite={favorites.includes(product.id)}
+                                    onToggleFavorite={() => toggleFavorite(product.id)}
+                                />
+                            </div>
                         ))}
                     </div>
                 ) : (
                     <div className="no-results">
                         <h3>No books found</h3>
-                        <p>Try searching with different keywords</p>
+                        <p>Try searching with different keywords or adjust your filters</p>
                     </div>
                 )}
             </main>
 
             <footer className="footer">
                 <p>© 2026 glanceread. All rights reserved.</p>
+                <Link to="/contact" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.9rem', marginLeft: '1rem' }}>
+                    Contact Us
+                </Link>
             </footer>
+
+            {/* Scroll to Top Button */}
+            {showScrollTop && (
+                <button 
+                    onClick={scrollToTop} 
+                    className="scroll-to-top"
+                    aria-label="Scroll to top"
+                >
+                    <ArrowUp size={24} />
+                </button>
+            )}
         </div>
     );
 }

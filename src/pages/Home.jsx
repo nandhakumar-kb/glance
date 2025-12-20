@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import ProductCard from '../ProductCard';
-import LoadingCard from '../components/LoadingCard';
 import '../index.css';
 import { Link } from 'react-router-dom';
 import { ArrowUp } from 'lucide-react';
@@ -8,15 +7,8 @@ import { ArrowUp } from 'lucide-react';
 function Home({ products, favorites, toggleFavorite }) {
     const [searchQuery, setSearchQuery] = useState('');
     const [showScrollTop, setShowScrollTop] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
     const [searchSuggestions, setSearchSuggestions] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
-
-    // Simulate initial loading
-    useEffect(() => {
-        const timer = setTimeout(() => setIsLoading(false), 1000);
-        return () => clearTimeout(timer);
-    }, []);
 
     // Scroll to top button visibility
     useEffect(() => {
@@ -138,13 +130,7 @@ function Home({ products, favorites, toggleFavorite }) {
                         <span className="book-count">{filteredProducts.length} {filteredProducts.length === 1 ? 'Book' : 'Books'}</span>
                     </div>
                 </div>
-                {isLoading ? (
-                    <div className="product-grid">
-                        {[...Array(6)].map((_, index) => (
-                            <LoadingCard key={index} />
-                        ))}
-                    </div>
-                ) : filteredProducts.length > 0 ? (
+                {filteredProducts.length > 0 ? (
                     <div className="product-grid">
                         {filteredProducts.map((product, index) => (
                             <div 

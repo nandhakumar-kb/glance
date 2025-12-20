@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Heart, Share2, Check } from 'lucide-react';
 import { useToast } from './context/ToastContext';
 
 const ProductCard = ({ product, isFavorite, onToggleFavorite }) => {
     const { showToast } = useToast();
-    const [imageLoaded, setImageLoaded] = useState(false);
 
     const handleShare = async () => {
         const shareData = {
@@ -56,13 +55,10 @@ const ProductCard = ({ product, isFavorite, onToggleFavorite }) => {
                 </button>
             </div>
             <div className="image-container">
-                {!imageLoaded && <div className="image-skeleton shimmer"></div>}
                 <img 
                     src={product.image} 
                     alt={`${product.title} book cover`}
                     loading="lazy"
-                    onLoad={() => setImageLoaded(true)}
-                    style={{ display: imageLoaded ? 'block' : 'none' }}
                 />
             </div>
             <div className="card-content">

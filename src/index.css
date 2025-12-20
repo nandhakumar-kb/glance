@@ -98,6 +98,37 @@ body {
   background-color: rgba(255, 255, 255, 0.05);
 }
 
+/* Share Website Button */
+.share-website-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.share-website-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+}
+
+.share-website-btn:active {
+  transform: translateY(0);
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 /* Hero Section */
 .hero-section {
   display: flex;
@@ -442,12 +473,75 @@ body {
 
 /* Footer */
 .footer {
-  text-align: center;
   margin-top: 6rem;
-  padding: 2rem 0;
+  padding: 3rem 0 2rem;
   border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.affiliate-disclosure {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(37, 99, 235, 0.05));
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.disclosure-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent-blue);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.disclosure-text {
+  font-size: 0.9rem;
   color: var(--text-secondary);
-  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.footer-social {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.footer-share-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.footer-share-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--text-primary);
+  border-color: var(--accent-blue);
 }
 
 /* Responsive Design */
@@ -582,6 +676,53 @@ body {
     margin-top: 4rem;
     font-size: 0.85rem;
   }
+
+  /* Better Touch Targets for Mobile */
+  .favorite-btn,
+  .share-btn {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 0.7rem;
+  }
+
+  .btn {
+    min-height: 48px;
+    padding: 0.8rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .search-bar {
+    min-height: 48px;
+  }
+
+  .share-website-btn {
+    padding: 0.7rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .admin-link {
+    padding: 0.6rem 0.9rem;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Swipe indicator hint */
+  .product-grid {
+    position: relative;
+  }
+
+  .product-grid::after {
+    content: '';
+    position: absolute;
+    bottom: -2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+  }
 }
 
 @media (max-width: 400px) {
@@ -596,6 +737,28 @@ body {
   .btn {
     padding: 0.6rem 0.7rem;
     font-size: 0.75rem;
+    min-height: 44px;
+  }
+
+  .share-website-btn span {
+    display: none;
+  }
+
+  .share-website-btn {
+    padding: 0.7rem;
+    min-width: 44px;
+  }
+
+  .affiliate-disclosure {
+    padding: 1rem;
+  }
+
+  .disclosure-title {
+    font-size: 0.9rem;
+  }
+
+  .disclosure-text {
+    font-size: 0.85rem;
   }
 }
 

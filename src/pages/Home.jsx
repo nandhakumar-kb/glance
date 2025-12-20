@@ -1,14 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ProductCard from '../ProductCard';
 import '../index.css';
 import { Link } from 'react-router-dom';
-import { ArrowUp } from 'lucide-react';
+import { ArrowUp, Share2 } from 'lucide-react';
+import { useToast } from '../context/ToastContext';
 
 function Home({ products, favorites, toggleFavorite }) {
+    const { showToast } = useToast();
     const [searchQuery, setSearchQuery] = useState('');
     const [showScrollTop, setShowScrollTop] = useState(false);
     const [searchSuggestions, setSearchSuggestions] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
+    const touchStartX = useRef(0);
+    const touchEndX = useRef(0);
 
     // Scroll to top button visibility
     useEffect(() => {
@@ -57,6 +61,49 @@ function Home({ products, favorites, toggleFavorite }) {
         setShowSuggestions(false);
     };
 
+    const handleShareWebsite = async () => {
+        const shareData = {
+            title: 'GlanceRead - Premium Books for Personal Growth',
+            text: 'Check out this amazing collection of curated books!',
+            url: window.location.href
+        };
+
+        try {
+            if (navigator.share) {
+                await navigator.share(shareData);
+            } else {
+                await navigator.clipboard.writeText(window.location.href);
+                showToast('Link copied to clipboard!', 'success');
+            }
+        } catch (err) {
+            if (err.name !== 'AbortError') {
+                showToast('Could not share', 'error');
+            }
+        }
+    };
+
+    const handleTouchStart = (e) => {
+        touchStartX.current = e.touches[0].clientX;
+    };
+
+    const handleTouchMove = (e) => {
+        touchEndX.current = e.touches[0].clientX;
+    };
+
+    const handleTouchEnd = () => {
+        const swipeDistance = touchStartX.current - touchEndX.current;
+        const threshold = 50;
+
+        if (Math.abs(swipeDistance) > threshold) {
+            // Swipe detected - can be used for navigation or actions
+            if (swipeDistance > 0) {
+                // Swiped left
+            } else {
+                // Swiped right
+            }
+        }
+    };
+
     return (
         <div className="app-container">
             <nav className="header">
@@ -69,6 +116,13 @@ function Home({ products, favorites, toggleFavorite }) {
                         </span>
                     </div>
                     <div className="header-nav">
+                        <button 
+                            onClick={handleShareWebsite}
+                            className="share-website-btn"
+                            aria-label="Share this website"
+                        >
+                            <Share2 size={18} /> Share
+                        </button>
                         <Link to="/admin" className="admin-link">Admin</Link>
                     </div>
                 </div>
@@ -131,7 +185,12 @@ function Home({ products, favorites, toggleFavorite }) {
                     </div>
                 </div>
                 {filteredProducts.length > 0 ? (
-                    <div className="product-grid">
+                    <div 
+                        className="product-grid"
+                        onTouchStart={handleTouchStart}
+                        onTouchMove={handleTouchMove}
+                        onTouchEnd={handleTouchEnd}
+                    >
                         {filteredProducts.map((product, index) => (
                             <div 
                                 key={product.id} 
@@ -155,10 +214,24 @@ function Home({ products, favorites, toggleFavorite }) {
             </main>
 
             <footer className="footer">
-                <p>© 2026 glanceread. All rights reserved.</p>
-                <Link to="/contact" style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontSize: '0.9rem', marginLeft: '1rem' }}>
-                    Contact Us
-                </Link>
+                <div className="footer-content">
+                    <div className="affiliate-disclosure">
+                        <p className="disclosure-title">📢 Affiliate Disclosure</p>
+                        <p className="disclosure-text">
+                            As an Amazon Associate, we earn from qualifying purchases. When you click on book links and make a purchase, 
+                            we may receive a small commission at no extra cost to you. This helps us maintain and improve our service. 
+                            Thank you for your support!
+                        </p>
+                    </div>
+                    <div className="footer-links">
+                        <p>© 2026 GlanceRead. All rights reserved.</p>
+                        <div className="footer-social">
+                            <button onClick={handleShareWebsite} className="footer-share-btn" aria-label="Share GlanceRead">
+                                <Share2 size={16} /> Share Website
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </footer>
 
             {/* Scroll to Top Button */}

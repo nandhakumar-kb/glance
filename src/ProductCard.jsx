@@ -6,23 +6,38 @@ const ProductCard = ({ product, isFavorite, onToggleFavorite }) => {
     const { showToast } = useToast();
 
     const handleShare = async () => {
+        const bookUrl = window.location.href;
+        const bookText = `Check out "${product.title}" by ${product.author}`;
+        
         const shareData = {
             title: product.title,
-            text: `Check out "${product.title}" by ${product.author}`,
-            url: window.location.href
+            text: bookText,
+            url: bookUrl
         };
 
         try {
-            if (navigator.share) {
+            // Try native share first (works great on mobile)
+            if (navigator.share && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
                 await navigator.share(shareData);
             } else {
-                // Fallback: copy to clipboard
-                await navigator.clipboard.writeText(`${product.title} by ${product.author} - ${window.location.href}`);
-                showToast('Link copied to clipboard!', 'success');
+                // Desktop or unsupported: show platform-specific options
+                const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(bookText + ' ' + bookUrl)}`;
+                const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(bookUrl)}&text=${encodeURIComponent(bookText)}`;
+                const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(bookText)}&url=${encodeURIComponent(bookUrl)}`;
+                
+                // For simplicity, copy to clipboard and show toast with platforms
+                await navigator.clipboard.writeText(`${bookText} - ${bookUrl}`);
+                showToast('Link copied! Share on WhatsApp, Telegram, or Twitter', 'success');
             }
         } catch (err) {
             if (err.name !== 'AbortError') {
-                showToast('Could not share', 'error');
+                // Fallback: just copy to clipboard
+                try {
+                    await navigator.clipboard.writeText(`${bookText} - ${bookUrl}`);
+                    showToast('Link copied to clipboard!', 'success');
+                } catch {
+                    showToast('Could not share', 'error');
+                }
             }
         }
     };

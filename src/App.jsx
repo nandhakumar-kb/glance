@@ -10,7 +10,7 @@ import './index.css';
 
 function App() {
   // Force reset localStorage if it's corrupted or empty
-  const BOOKS_VERSION = '1.1';
+  const BOOKS_VERSION = '1.2';
   
   const [products, setProducts] = useState(() => {
     const savedVersion = localStorage.getItem('booksVersion');

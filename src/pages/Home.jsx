@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import ProductCard from '../ProductCard';
 import LoadingCard from '../components/LoadingCard';
-import { useTheme } from '../context/ThemeContext';
 import '../index.css';
 import { Link } from 'react-router-dom';
-import { Sun, Moon, Mail, ArrowUp } from 'lucide-react';
+import { Mail, ArrowUp } from 'lucide-react';
 
 function Home({ products, favorites, toggleFavorite }) {
-    const { theme, toggleTheme } = useTheme();
     const [searchQuery, setSearchQuery] = useState('');
     const [sortBy, setSortBy] = useState('default');
     const [showScrollTop, setShowScrollTop] = useState(false);
@@ -103,13 +101,6 @@ function Home({ products, favorites, toggleFavorite }) {
                         <Link to="/contact" className="nav-link" aria-label="Contact Us">
                             <Mail size={18} /> Contact
                         </Link>
-                        <button 
-                            onClick={toggleTheme} 
-                            className="theme-toggle"
-                            aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
-                        >
-                            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-                        </button>
                         <Link to="/admin" className="admin-link">Admin</Link>
                     </div>
                 </div>

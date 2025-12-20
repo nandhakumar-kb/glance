@@ -9,14 +9,6 @@
   --font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
-/* Light Theme */
-[data-theme="light"] {
-  --bg-color: #f8f9fa;
-  --card-bg: #ffffff;
-  --text-primary: #1a1a1a;
-  --text-secondary: #6b7280;
-}
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -633,26 +625,6 @@ body {
   background-color: rgba(255, 255, 255, 0.05);
 }
 
-.theme-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  color: var(--text-secondary);
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.theme-toggle:hover {
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--accent-orange);
-  transform: rotate(15deg);
-}
-
 /* Search Suggestions */
 .search-wrapper {
   position: relative;
@@ -865,28 +837,6 @@ button:focus-visible,
 a:focus-visible {
   outline: 2px solid var(--accent-blue);
   outline-offset: 2px;
-}
-
-/* Light Theme Adjustments */
-[data-theme="light"] .product-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(249, 250, 251, 0.9));
-  border-color: rgba(0, 0, 0, 0.1);
-}
-
-[data-theme="light"] .search-bar,
-[data-theme="light"] .sort-dropdown {
-  background: rgba(0, 0, 0, 0.03);
-  border-color: rgba(0, 0, 0, 0.1);
-}
-
-[data-theme="light"] .favorite-btn,
-[data-theme="light"] .share-btn {
-  background: rgba(255, 255, 255, 0.9);
-  border-color: rgba(0, 0, 0, 0.1);
-}
-
-[data-theme="light"] .search-suggestions {
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
 
 /* Mobile Responsive Updates */

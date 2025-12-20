@@ -129,6 +129,40 @@ body {
   gap: 1rem;
 }
 
+/* Social Media Icons */
+.social-links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.social-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.social-icon:hover {
+  color: var(--accent-yellow);
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.15), rgba(59, 130, 246, 0.15));
+  border-color: rgba(251, 191, 36, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.3);
+}
+
+.social-icon svg {
+  width: 18px;
+  height: 18px;
+}
+
 /* Hero Section */
 .hero-section {
   display: flex;

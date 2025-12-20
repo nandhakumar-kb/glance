@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import ProductCard from '../ProductCard';
 import '../index.css';
 import { Link } from 'react-router-dom';
-import { ArrowUp, Share2 } from 'lucide-react';
+import { ArrowUp, Share2, Linkedin, Instagram } from 'lucide-react';
 import { useToast } from '../context/ToastContext';
 
 function Home({ products, favorites, toggleFavorite }) {
@@ -116,6 +116,24 @@ function Home({ products, favorites, toggleFavorite }) {
                         </span>
                     </div>
                     <div className="header-nav">
+                        <div className="social-links">
+                            <a href="https://in.pinterest.com/glanceread/" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Pinterest">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/>
+                                </svg>
+                            </a>
+                            <a href="https://www.linkedin.com/company/glanceread" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="LinkedIn">
+                                <Linkedin size={18} />
+                            </a>
+                            <a href="https://www.instagram.com/glanceread/" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Instagram">
+                                <Instagram size={18} />
+                            </a>
+                            <a href="https://www.threads.com/@glanceread" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Threads">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.781 3.631 2.695 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.704-1.108 0-2.014-.414-2.698-1.23-.684-.817-1.028-1.917-1.028-3.3 0-1.385.345-2.484 1.028-3.301.684-.817 1.59-1.229 2.698-1.229 1.137 0 2.062.433 2.75 1.287.345.43.61.938.79 1.513.18-.575.445-1.083.79-1.513.688-.854 1.613-1.287 2.75-1.287 1.592 0 2.846.602 3.732 1.789.886 1.187 1.371 2.87 1.371 5.041 0 2.67-.698 4.776-2.074 6.258-1.556 1.676-3.857 2.531-6.84 2.531z"/>
+                                </svg>
+                            </a>
+                        </div>
                         <button 
                             onClick={handleShareWebsite}
                             className="share-website-btn"
@@ -226,6 +244,24 @@ function Home({ products, favorites, toggleFavorite }) {
                     <div className="footer-links">
                         <p>© 2026 GlanceRead. All rights reserved.</p>
                         <div className="footer-social">
+                            <div className="social-links">
+                                <a href="https://in.pinterest.com/glanceread/" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Pinterest">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738.098.119.112.224.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.631-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12 0-6.628-5.373-12-12-12z"/>
+                                    </svg>
+                                </a>
+                                <a href="https://www.linkedin.com/company/glanceread" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="LinkedIn">
+                                    <Linkedin size={18} />
+                                </a>
+                                <a href="https://www.instagram.com/glanceread/" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Instagram">
+                                    <Instagram size={18} />
+                                </a>
+                                <a href="https://www.threads.com/@glanceread" target="_blank" rel="noopener noreferrer" className="social-icon" aria-label="Threads">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                                        <path d="M12.186 24h-.007c-3.581-.024-6.334-1.205-8.184-3.509C2.35 18.44 1.5 15.586 1.472 12.01v-.017c.03-3.579.879-6.43 2.525-8.482C5.845 1.205 8.6.024 12.18 0h.014c2.746.02 5.043.725 6.826 2.098 1.677 1.29 2.858 3.13 3.509 5.467l-2.04.569c-1.104-3.96-3.898-5.984-8.304-6.015-2.91.022-5.11.936-6.54 2.717C4.307 6.504 3.616 8.914 3.589 12c.027 3.086.718 5.496 2.057 7.164 1.43 1.781 3.631 2.695 6.54 2.717 2.623-.02 4.358-.631 5.8-2.045 1.647-1.613 1.618-3.593 1.09-4.798-.31-.71-.873-1.3-1.634-1.75-.192 1.352-.622 2.446-1.284 3.272-.886 1.102-2.14 1.704-3.73 1.704-1.108 0-2.014-.414-2.698-1.23-.684-.817-1.028-1.917-1.028-3.3 0-1.385.345-2.484 1.028-3.301.684-.817 1.59-1.229 2.698-1.229 1.137 0 2.062.433 2.75 1.287.345.43.61.938.79 1.513.18-.575.445-1.083.79-1.513.688-.854 1.613-1.287 2.75-1.287 1.592 0 2.846.602 3.732 1.789.886 1.187 1.371 2.87 1.371 5.041 0 2.67-.698 4.776-2.074 6.258-1.556 1.676-3.857 2.531-6.84 2.531z"/>
+                                    </svg>
+                                </a>
+                            </div>
                             <button onClick={handleShareWebsite} className="footer-share-btn" aria-label="Share GlanceRead">
                                 <Share2 size={16} /> Share Website
                             </button>

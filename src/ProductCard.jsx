@@ -5,6 +5,7 @@ import { useToast } from './context/ToastContext';
 const ProductCard = ({ product, isFavorite, onToggleFavorite }) => {
     const { showToast } = useToast();
     const [imageLoaded, setImageLoaded] = React.useState(false);
+    const [imageError, setImageError] = React.useState(false);
 
     const handleShare = async () => {
         const bookUrl = window.location.href;
@@ -71,12 +72,16 @@ const ProductCard = ({ product, isFavorite, onToggleFavorite }) => {
                 </button>
             </div>
             <div className="image-container">
-                {!imageLoaded && <div className="image-skeleton" />}
+                {!imageLoaded && !imageError && <div className="image-skeleton" />}
                 <img 
-                    src={product.image} 
+                    src={imageError ? 'https://via.placeholder.com/128x200/1a1a1a/666666?text=Cover+Unavailable' : product.image}
                     alt={`${product.title} book cover`}
                     loading="lazy"
                     onLoad={() => setImageLoaded(true)}
+                    onError={() => {
+                        setImageError(true);
+                        setImageLoaded(true);
+                    }}
                     style={{ opacity: imageLoaded ? 1 : 0 }}
                 />
             </div>

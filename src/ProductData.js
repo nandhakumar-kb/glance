@@ -3,7 +3,7 @@ export const products = [
     id: 1,
     title: "Atomic Habits",
     author: "James Clear",
-    image: "https://covers.openlibrary.org/b/isbn/9780735211292-L.jpg",
+    image: "https://m.media-amazon.com/images/I/817HaeblezL._AC_UF1000,1000_QL80_.jpg",
     affiliateLinkIN: "https://amzn.to/4qjA7Lf",
     affiliateLinkUS: "https://amzn.to/48Hmgs9"
   },
@@ -27,7 +27,7 @@ export const products = [
     id: 4,
     title: "Rich Dad Poor Dad",
     author: "Robert T. Kiyosaki",
-    image: "https://covers.openlibrary.org/b/isbn/9781612680194-L.jpg",
+    image: "https://cdn.penguin.co.in/wp-content/uploads/2023/12/9781612681139-1-scaled.jpg",
     affiliateLinkIN: "https://amzn.to/3Y01LAQ",
     affiliateLinkUS: "https://amzn.to/4j5cFPx"
   },
@@ -35,7 +35,7 @@ export const products = [
     id: 5,
     title: "Wings of Fire",
     author: "A.P.J. Abdul Kalam",
-    image: "https://covers.openlibrary.org/b/isbn/9788173711466-L.jpg",
+    image: "https://www.bookganga.com/eBooks/Content/images/books/36c687f997e64a01bee7c6bc6a6d0a75.jpg",
     affiliateLinkIN: "https://amzn.to/49gV9En",
     affiliateLinkUS: "https://amzn.to/4s0QRZj"
   },
@@ -43,7 +43,7 @@ export const products = [
     id: 6,
     title: "The 4-Hour Workweek",
     author: "Tim Ferriss",
-    image: "https://covers.openlibrary.org/b/isbn/9780307465351-L.jpg",
+    image: "https://m.media-amazon.com/images/I/71vO9Tbf4-L.jpg",
     affiliateLinkIN: "https://amzn.to/3L618CM",
     affiliateLinkUS: "https://amzn.to/3Mzkdhg"
   },
@@ -51,7 +51,7 @@ export const products = [
     id: 7,
     title: "Ikigai",
     author: "Hector Garcia",
-    image: "https://covers.openlibrary.org/b/isbn/9780143130727-L.jpg",
+    image: "https://m.media-amazon.com/images/I/81l3rZK4lnL._AC_UF1000,1000_QL80_.jpg",
     affiliateLinkIN: "https://amzn.to/3L7yRf4",
     affiliateLinkUS: "https://amzn.to/4aTKxMU"
   },
@@ -75,7 +75,7 @@ export const products = [
     id: 10,
     title: "Zero to One",
     author: "Peter Thiel",
-    image: "https://covers.openlibrary.org/b/isbn/9780804139298-L.jpg",
+    image: "https://m.media-amazon.com/images/I/61PDzIhVLnL._AC_UF1000,1000_QL80_.jpg",
     affiliateLinkIN: "https://amzn.to/4p1K8vp",
     affiliateLinkUS: "https://amzn.to/4j5bfEC"
   },
@@ -99,7 +99,7 @@ export const products = [
     id: 13,
     title: "I Will Teach You to Be Rich",
     author: "Ramit Sethi",
-    image: "https://covers.openlibrary.org/b/isbn/9780761147480-L.jpg",
+    image: "https://m.media-amazon.com/images/I/81c9SSbG3OL._AC_UF1000,1000_QL80_.jpg",
     affiliateLinkIN: "https://amzn.to/4j0osye",
     affiliateLinkUS: "https://amzn.to/45hyXHQ"
   },
@@ -107,7 +107,7 @@ export const products = [
     id: 14,
     title: "How to Stop Worrying and Start Living",
     author: "Dale Carnegie",
-    image: "https://covers.openlibrary.org/b/isbn/9780671733353-L.jpg",
+    image: "https://rekhtabooks.com/cdn/shop/products/9788175993952.jpg?v=1688453948",
     affiliateLinkIN: "https://amzn.to/3MKSha8",
     affiliateLinkUS: "https://amzn.to/4p0n0NI"
   },
@@ -115,7 +115,7 @@ export const products = [
     id: 15,
     title: "The 5 AM Club",
     author: "Robin Sharma",
-    image: "https://covers.openlibrary.org/b/isbn/9781443456623-L.jpg",
+    image: "https://m.media-amazon.com/images/I/712VrOZ60zL._AC_UF1000,1000_QL80_.jpg",
     affiliateLinkIN: "https://amzn.to/4p0ouYw",
     affiliateLinkUS: "https://amzn.to/4q9SPom"
   },
@@ -123,7 +123,7 @@ export const products = [
     id: 16,
     title: "Coffee Can Investing",
     author: "Saurabh Mukherjea",
-    image: "https://covers.openlibrary.org/b/isbn/9780670090457-L.jpg",
+    image: "https://m.media-amazon.com/images/I/81wr8n5+vhL.jpg",
     affiliateLinkIN: "https://amzn.to/4amKRUr",
     affiliateLinkUS: "https://amzn.to/4qakKoc"
   },
@@ -131,7 +131,7 @@ export const products = [
     id: 17,
     title: "12 Rules for Life",
     author: "Jordan Peterson",
-    image: "https://covers.openlibrary.org/b/isbn/9780345816023-L.jpg",
+    image: "https://m.media-amazon.com/images/I/71OVB8HknWL.jpg",
     affiliateLinkIN: "https://amzn.to/454xvZk",
     affiliateLinkUS: "https://amzn.to/4rZ5Xi1"
   },
@@ -139,7 +139,7 @@ export const products = [
     id: 18,
     title: "The Power of Habit",
     author: "Charles Duhigg",
-    image: "https://covers.openlibrary.org/b/isbn/9780812981605-L.jpg",
+    image: "https://m.media-amazon.com/images/I/71eoUH2EngL.jpg",
     affiliateLinkIN: "https://amzn.to/44zBNI9",
     affiliateLinkUS: "https://amzn.to/3KAR7xq"
   },
@@ -147,7 +147,7 @@ export const products = [
     id: 19,
     title: "Start With Why",
     author: "Simon Sinek",
-    image: "https://covers.openlibrary.org/b/isbn/9781591846444-L.jpg",
+    image: "https://m.media-amazon.com/images/I/71ha4cV4GqL._AC_UF1000,1000_QL80_.jpg",
     affiliateLinkIN: "https://amzn.to/3MJ4rAr",
     affiliateLinkUS: "https://amzn.to/3YA3Pj6"
   },
@@ -171,7 +171,7 @@ export const products = [
     id: 22,
     title: "The Intelligent Investor",
     author: "Benjamin Graham",
-    image: "https://covers.openlibrary.org/b/isbn/9780060555665-L.jpg",
+    image: "https://miro.medium.com/v2/resize:fit:640/format:webp/0*o4MV-RwLqVFynMbu.jpg",
     affiliateLinkIN: "https://amzn.to/3L7MwCU",
     affiliateLinkUS: "https://amzn.to/4p2OgLJ"
   },
@@ -179,7 +179,7 @@ export const products = [
     id: 23,
     title: "The 7 Habits of Highly Effective People",
     author: "Stephen R. Covey",
-    image: "https://covers.openlibrary.org/b/isbn/9780743269513-L.jpg",
+    image: "https://m.media-amazon.com/images/I/71Koyhv2bML._AC_UF1000,1000_QL80_.jpg",
     affiliateLinkIN: "https://amzn.to/3YB6Pvw",
     affiliateLinkUS: "https://amzn.to/4pN0OrE"
   },
@@ -187,7 +187,7 @@ export const products = [
     id: 24,
     title: "Rework",
     author: "Jason Fried & David Heinemeier Hansson",
-    image: "https://covers.openlibrary.org/b/isbn/9780307463746-L.jpg",
+    image: "https://m.media-amazon.com/images/I/71eXlKpSbmL._UF1000,1000_QL80_.jpg",
     affiliateLinkIN: "https://amzn.to/4soNFXN",
     affiliateLinkUS: "https://amzn.to/48Tu6O0"
   },
@@ -195,7 +195,7 @@ export const products = [
     id: 25,
     title: "The Richest Man in Babylon",
     author: "George S. Clason",
-    image: "https://covers.openlibrary.org/b/isbn/9780451205360-L.jpg",
+    image: "https://m.media-amazon.com/images/I/71PxZSoUitL._UF1000,1000_QL80_.jpg",
     affiliateLinkIN: "https://amzn.to/45aSVnD",
     affiliateLinkUS: "https://amzn.to/4paXaH3"
   },
@@ -211,7 +211,7 @@ export const products = [
     id: 27,
     title: "Secrets of the Millionaire Mind",
     author: "T. Harv Eker",
-    image: "https://covers.openlibrary.org/b/isbn/9780060763282-L.jpg",
+    image: "https://m.media-amazon.com/images/I/61Cny0jTD3L._AC_UF1000,1000_QL80_.jpg",
     affiliateLinkIN: "https://amzn.to/44DGQan",
     affiliateLinkUS: "https://amzn.to/4rYfSnQ"
   },
@@ -235,7 +235,7 @@ export const products = [
     id: 30,
     title: "Designing Your Life",
     author: "Bill Burnett & Dave Evans",
-    image: "https://covers.openlibrary.org/b/isbn/9781101875322-L.jpg",
+    image: "https://m.media-amazon.com/images/I/51L5hQ2mFdL.jpg",
     affiliateLinkIN: "https://amzn.to/4pH9UpS",
     affiliateLinkUS: "https://amzn.to/44Dh4TK"
   },
@@ -243,7 +243,7 @@ export const products = [
     id: 31,
     title: "Diamonds in the Dust",
     author: "Saurabh Mukherjea",
-    image: "https://covers.openlibrary.org/b/isbn/9780670095308-L.jpg",
+    image: "https://m.media-amazon.com/images/I/81mOdd8hNWL.jpg",
     affiliateLinkIN: "https://amzn.to/3Le3FLf",
     affiliateLinkUS: "https://amzn.to/4j31mag"
   },
@@ -259,7 +259,7 @@ export const products = [
     id: 33,
     title: "The Millionaire Next Door",
     author: "Thomas J. Stanley",
-    image: "https://covers.openlibrary.org/b/isbn/9781589795471-L.jpg",
+    image: "https://m.media-amazon.com/images/I/81Bte4GAYtL._AC_UF1000,1000_QL80_.jpg",
     affiliateLinkIN: "https://amzn.to/4aZ5qX2",
     affiliateLinkUS: "https://amzn.to/3YD7BIt"
   },
@@ -275,7 +275,7 @@ export const products = [
     id: 35,
     title: "The 80/20 Principle",
     author: "Richard Koch",
-    image: "https://covers.openlibrary.org/b/isbn/9780385491747-L.jpg",
+    image: "https://m.media-amazon.com/images/I/71sAovz8llL.jpg",
     affiliateLinkIN: "https://amzn.to/3Na4OnC",
     affiliateLinkUS: "https://amzn.to/456dnWM"
   },
@@ -283,7 +283,7 @@ export const products = [
     id: 36,
     title: "Mindset",
     author: "Carol S. Dweck",
-    image: "https://covers.openlibrary.org/b/isbn/9780345472328-L.jpg",
+    image: "https://m.media-amazon.com/images/I/61FXPFVKD6L.jpg",
     affiliateLinkIN: "https://amzn.to/44FebBT",
     affiliateLinkUS: "https://amzn.to/4p3ugZi"
   },
@@ -299,7 +299,7 @@ export const products = [
     id: 38,
     title: "The Automatic Millionaire",
     author: "David Bach",
-    image: "https://covers.openlibrary.org/b/isbn/9780767923828-L.jpg",
+    image: "https://m.media-amazon.com/images/I/81qiLs58WTL.jpg",
     affiliateLinkIN: "https://amzn.to/4s1TFVX",
     affiliateLinkUS: "https://amzn.to/4pTbjd6"
   },
@@ -307,7 +307,7 @@ export const products = [
     id: 39,
     title: "The Power of Now",
     author: "Eckhart Tolle",
-    image: "https://covers.openlibrary.org/b/isbn/9781577314806-L.jpg",
+    image: "https://m.media-amazon.com/images/I/61Ij8nLooNL._UF350,350_QL50_.jpg",
     affiliateLinkIN: "https://amzn.to/4amYMK4",
     affiliateLinkUS: "https://amzn.to/4s81xp0"
   },
@@ -339,7 +339,7 @@ export const products = [
     id: 43,
     title: "Smarter Faster Better",
     author: "Charles Duhigg",
-    image: "https://covers.openlibrary.org/b/isbn/9780812993394-L.jpg",
+    image: "https://twominutebooks.com/wp-content/uploads/2020/06/51B2dMwPJ5L.jpg",
     affiliateLinkIN: "https://amzn.to/4qjHfab",
     affiliateLinkUS: "https://amzn.to/3LbFzAM"
   },
@@ -355,7 +355,7 @@ export const products = [
     id: 45,
     title: "The 5 Love Languages",
     author: "Gary Chapman",
-    image: "https://covers.openlibrary.org/b/isbn/9780802412706-L.jpg",
+    image: "https://m.media-amazon.com/images/I/81m1gW3w+EL.jpg",
     affiliateLinkIN: "https://amzn.to/4qpZuuZ",
     affiliateLinkUS: "https://amzn.to/4s2NGAp"
   },
@@ -363,7 +363,7 @@ export const products = [
     id: 46,
     title: "Do It Today",
     author: "Darius Foroux",
-    image: "https://covers.openlibrary.org/b/isbn/9780143452126-L.jpg",
+    image: "https://cdn.penguin.co.in/wp-content/uploads/2020/09/9789357088718-scaled.jpg",
     affiliateLinkIN: "https://amzn.to/4rYgkm2",
     affiliateLinkUS: "https://amzn.to/45dagML"
   },
@@ -371,7 +371,7 @@ export const products = [
     id: 47,
     title: "Better Than Before",
     author: "Gretchen Rubin",
-    image: "https://covers.openlibrary.org/b/isbn/9780385348614-L.jpg",
+    image: "https://m.media-amazon.com/images/I/71ltmofswCL._AC_UF1000,1000_QL80_.jpg",
     affiliateLinkIN: "https://amzn.to/4qpw7ZH",
     affiliateLinkUS: "https://amzn.to/48QaSKw"
   },

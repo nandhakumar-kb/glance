@@ -1279,39 +1279,45 @@ a:focus-visible {
     height: 45px;
   }
 
+  /* Hide favorite and share buttons on mobile */
   .card-actions-top {
-    position: relative;
-    top: auto;
-    right: auto;
-    opacity: 1;
-    transform: translateY(0);
-    justify-content: center;
-    padding: 0.75rem;
-    margin: 0 1rem;
-    margin-top: -0.5rem;
-    background: rgba(22, 22, 22, 0.95);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
+    display: none !important;
+  }
+
+  /* Reorganize header nav into two rows */
+  .header-content {
+    flex-wrap: wrap;
     gap: 0.75rem;
-    z-index: 2;
   }
 
-  .favorite-btn,
-  .share-btn {
-    width: 40px;
-    height: 40px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  .header-logo {
+    width: 100%;
+    justify-content: center;
   }
 
-  .favorite-btn:active,
-  .share-btn:active {
-    transform: scale(0.95);
-    background: rgba(255, 255, 255, 0.15);
+  .header-nav {
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
   }
 
-  .favorite-btn.active {
-    background: rgba(239, 68, 68, 0.2);
+  .social-links {
+    order: 1;
+    width: 100%;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .share-website-btn {
+    order: 2;
+    padding: 0.65rem 1.25rem;
+    font-size: 0.85rem;
+  }
+
+  .admin-link {
+    order: 3;
+    padding: 0.65rem 1rem;
+    font-size: 0.85rem;
   }
 }

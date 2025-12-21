@@ -107,7 +107,7 @@ export const products = [
     id: 14,
     title: "How to Stop Worrying and Start Living",
     author: "Dale Carnegie",
-    image: "https://rekhtabooks.com/cdn/shop/products/9788175993952.jpg?v=1688453948",
+    image: "https://m.media-amazon.com/images/I/61E8vTEXGnL._UF1000,1000_QL80_.jpg",
     affiliateLinkIN: "https://amzn.to/3MKSha8",
     affiliateLinkUS: "https://amzn.to/4p0n0NI"
   },

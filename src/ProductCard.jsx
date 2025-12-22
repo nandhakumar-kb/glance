@@ -71,7 +71,15 @@ const ProductCard = ({ product, isFavorite, onToggleFavorite }) => {
                     <Share2 size={18} />
                 </button>
             </div>
-            <div className="image-container" style={{ cursor: product.redirectUrl ? 'pointer' : 'default' }}>
+            <div 
+                className="image-container" 
+                style={{ cursor: product.redirectUrl ? 'pointer' : 'default' }}
+                onClick={() => {
+                    if (product.redirectUrl) {
+                        window.open(product.redirectUrl, '_blank', 'noopener,noreferrer');
+                    }
+                }}
+            >
                 {!imageLoaded && !imageError && <div className="image-skeleton" />}
                 <img 
                     src={imageError ? 'https://via.placeholder.com/128x200/1a1a1a/666666?text=Cover+Unavailable' : product.image}
@@ -82,12 +90,7 @@ const ProductCard = ({ product, isFavorite, onToggleFavorite }) => {
                         setImageError(true);
                         setImageLoaded(true);
                     }}
-                    onClick={() => {
-                        if (product.redirectUrl) {
-                            window.open(product.redirectUrl, '_blank', 'noopener,noreferrer');
-                        }
-                    }}
-                    style={{ opacity: imageLoaded ? 1 : 0 }}
+                    style={{ opacity: imageLoaded ? 1 : 0, cursor: product.redirectUrl ? 'pointer' : 'default' }}
                 />
             </div>
             <div className="card-content">

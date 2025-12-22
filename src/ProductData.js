@@ -6,7 +6,7 @@ export const products = [
     image: "https://m.media-amazon.com/images/I/817HaeblezL._AC_UF1000,1000_QL80_.jpg",
     affiliateLinkIN: "https://amzn.to/4qjA7Lf",
     affiliateLinkUS: "https://amzn.to/48Hmgs9",
-    redirectUrl: "https://scontent-maa2-2.cdninstagram.com/v/t51.2885-15/603924857_17846010066621055_7293736022491231562_n.jpg?stp=dst-jpg_e35_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InRocmVhZHMuRkVFRC5pbWFnZV91cmxnZW4uNzc1eDEwMjQuc2RyLmY4Mjc4Ny5kZWZhdWx0X2ltYWdlLmMyIn0&_nc_ht=scontent-maa2-2.cdninstagram.com&_nc_cat=107&_nc_oc=Q6cZ2QFRv8hahH7atnpbmDtj0HPF9ysJAbxfyjgWW7l2Gg58bHArzH7Za3QIEfHSC8P0cxw&_nc_ohc=y1OHGwJreEIQ7kNvwEhKHZ2&_nc_gid=DgFXEpmxFTZ4yK54p2jbvw&edm=AKr904kBAAAA&ccb=7-5&ig_cache_key=Mzc5MTc2NjU3Njc2OTU0OTgzMw%3D%3D.3-ccb7-5&oh=00_AfnKPuTyEIYm2ks9vY5gIe8dIVxT3ETgM3H0Ri2dtyy8ow&oe=694EC326&_nc_sid=23467f"
+    redirectUrl: "https://www.threads.com/@glanceread/post/DSfD5ynjEYJ/media"
   },
   {
     id: 2,

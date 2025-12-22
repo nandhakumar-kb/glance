@@ -52,6 +52,13 @@ const ProductCard = ({ product, isFavorite, onToggleFavorite }) => {
         );
     };
 
+    const handleImageClick = () => {
+        if (product.redirectUrl) {
+            console.log('Redirecting to:', product.redirectUrl);
+            window.open(product.redirectUrl, '_blank', 'noopener,noreferrer');
+        }
+    };
+
     return (
         <article className="product-card" role="article" aria-label={`${product.title} by ${product.author}`}>
             <div className="card-actions-top">
@@ -74,11 +81,7 @@ const ProductCard = ({ product, isFavorite, onToggleFavorite }) => {
             <div 
                 className="image-container" 
                 style={{ cursor: product.redirectUrl ? 'pointer' : 'default' }}
-                onClick={() => {
-                    if (product.redirectUrl) {
-                        window.open(product.redirectUrl, '_blank', 'noopener,noreferrer');
-                    }
-                }}
+                onClick={handleImageClick}
             >
                 {!imageLoaded && !imageError && <div className="image-skeleton" />}
                 <img 
@@ -90,7 +93,11 @@ const ProductCard = ({ product, isFavorite, onToggleFavorite }) => {
                         setImageError(true);
                         setImageLoaded(true);
                     }}
-                    style={{ opacity: imageLoaded ? 1 : 0, cursor: product.redirectUrl ? 'pointer' : 'default' }}
+                    style={{ 
+                        opacity: imageLoaded ? 1 : 0, 
+                        cursor: product.redirectUrl ? 'pointer' : 'default',
+                        pointerEvents: 'auto'
+                    }}
                 />
             </div>
             <div className="card-content">

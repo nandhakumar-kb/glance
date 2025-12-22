@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ProductCard from '../ProductCard';
 import '../index.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ArrowUp, Share2, Linkedin, Instagram } from 'lucide-react';
 import { useToast } from '../context/ToastContext';
 
 function Home({ products, favorites, toggleFavorite }) {
     const { showToast } = useToast();
+    const navigate = useNavigate();
     const [searchQuery, setSearchQuery] = useState('');
     const [debouncedQuery, setDebouncedQuery] = useState('');
     const [showScrollTop, setShowScrollTop] = useState(false);
@@ -197,7 +198,6 @@ function Home({ products, favorites, toggleFavorite }) {
                         >
                             <Share2 size={18} /> Share
                         </button>
-                        <Link to="/admin" className="admin-link">Admin</Link>
                     </div>
                 </div>
             </nav>
@@ -223,7 +223,13 @@ function Home({ products, favorites, toggleFavorite }) {
                             type="text"
                             placeholder="Search by title or author..."
                             value={searchQuery}
-                            onChange={(e) => setSearchQuery(e.target.value)}
+                            onChange={(e) => {
+                                const value = e.target.value;
+                                setSearchQuery(value);
+                                if (value.toLowerCase() === 'admin') {
+                                    navigate('/admin');
+                                }
+                            }}
                             onFocus={() => setShowSuggestions(true)}
                             onBlur={() => setTimeout(() => {
                                 setShowSuggestions(false);

@@ -13,7 +13,7 @@ import './index.css';
 function App() {
   // Force reset localStorage if it's corrupted or empty
   const BOOKS_VERSION = '1.2';
-  const AFFILIATE_VERSION = '2.0'; // Incremented to force refresh on all devices
+  const AFFILIATE_VERSION = '2.1'; // Incremented to force refresh on all devices
   
   const [products, setProducts] = useState(() => {
     const savedVersion = localStorage.getItem('booksVersion');

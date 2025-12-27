@@ -59,12 +59,7 @@ function App() {
       }
     } catch (e) {
       console.error("Failed to parse affiliate products", e);
-    }affiliate products to localStorage
-  useEffect(() => {
-    localStorage.setItem('affiliateProducts', JSON.stringify(affiliateProducts));
-  }, [affiliateProducts]);
-
-  // Save 
+    }
     
     localStorage.setItem('affiliateProducts', JSON.stringify(initialAffiliateProducts));
     return initialAffiliateProducts;

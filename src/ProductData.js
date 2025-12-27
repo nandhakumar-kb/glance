@@ -399,5 +399,14 @@ export const products = [
     image: "https://m.media-amazon.com/images/I/81JOXYezNXL._UF1000,1000_QL80_.jpg",
     affiliateLinkIN: "https://amzn.to/48YCw6R",
     affiliateLinkUS: "https://amzn.to/3KEopf6"
+  },
+  {
+    id: 51,
+    title: "Nivea Men Creme, Dark Spot Reduction, Non Greasy Moisturizer, Cream With Uv Protect, 150 ml",
+    description: "The Nivea Dark Spot Reduction Crème is specifically formulated for men's skin and is a daily use moisturizer",
+    image: "https://m.media-amazon.com/images/I/51Jer-OTUtL._SX679_.jpg",
+    price: "₹246",
+    affiliateLinkIN: "https://amzn.to/4phu9JZ",
+    category: "Beauty"
   }
 ];

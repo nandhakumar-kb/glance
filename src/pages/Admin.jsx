@@ -167,19 +167,7 @@ function Admin({ products, setProducts, affiliateProducts, setAffiliateProducts 
     };
 
     const currentProducts = activeTab === 'books' ? products : affiliateProducts;
-    const productType = activeTab === 'books' ? 'Book' : 'Product'   } else {
-            setProducts(products.map(p => p.id === editingId ? formData : p));
-            showToast('Book updated successfully!', 'success');
-        }
-        cancelEdit();
-    };
-
-    const deleteProduct = (id) => {
-        if (window.confirm('Are you sure you want to delete this book?')) {
-            setProducts(products.filter(p => p.id !== id));
-            showToast('Book deleted successfully', 'success');
-        }
-    };
+    const productType = activeTab === 'books' ? 'Book' : 'Product';
 
     return (
         <div className="admin-dashboard">

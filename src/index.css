@@ -852,6 +852,10 @@ body {
     font-size: 0.85rem;
   }
 
+  .hero-section {
+    padding-top: 3rem;
+  }
+
   .hero-content h1 {
     font-size: 2rem;
   }

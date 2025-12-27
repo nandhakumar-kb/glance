@@ -1,11 +1,12 @@
 export const affiliateProducts = [
+
   {
-    id: 1,
-    title: "Premium Wireless Headphones",
-    description: "High-quality noise-cancelling wireless headphones with premium sound",
-    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&q=80",
-    price: "$199.99",
-    affiliateLink: "https://amzn.to/example1",
-    category: "Electronics"
+    id: 2,
+    title: "Nivea Men Creme, Dark Spot Reduction, Non Greasy Moisturizer, Cream With Uv Protect, 150 ml",
+    description: "The Nivea Dark Spot Reduction Crème is specifically formulated for men's skin and is a daily use moisturizer",
+    image: "https://m.media-amazon.com/images/I/51Jer-OTUtL._SX679_.jpg",
+    price: "₹246",
+    affiliateLink: "https://amzn.to/4phu9JZ",
+    category: "Beauty"
   }
 ];

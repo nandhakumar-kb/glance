@@ -440,7 +440,7 @@ body {
 }
 
 .search-container {
-  margin: 0 auto 1rem;
+  margin: 0 auto 2rem;
   max-width: 700px;
 }
 
@@ -1466,6 +1466,7 @@ a:focus-visible {
 /* Results Info */
 .results-info {
   padding: 1rem 0;
+  margin-bottom: 1.5rem;
   text-align: center;
   color: var(--text-secondary);
   font-size: 0.9rem;

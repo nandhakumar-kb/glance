@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import AffiliateProductCard from '../components/AffiliateProductCard';
-import { affiliateProducts } from '../AffiliateProductData';
 import { ArrowLeft, Search, Filter } from 'lucide-react';
 import '../index.css';
 
-function Products() {
+function Products({ affiliateProducts = [] }) {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('All');
     const [filteredProducts, setFilteredProducts] = useState(affiliateProducts);
@@ -32,7 +31,7 @@ function Products() {
         }
 
         setFilteredProducts(filtered);
-    }, [searchQuery, selectedCategory]);
+    }, [searchQuery, selectedCategory, affiliateProducts]);
 
     return (
         <div className="home-container">

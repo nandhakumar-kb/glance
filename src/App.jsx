@@ -7,11 +7,13 @@ import NotFound from './pages/NotFound';
 import ErrorBoundary from './components/ErrorBoundary';
 import { ToastProvider } from './context/ToastContext';
 import { products as initialProducts } from './ProductData';
+import { affiliateProducts as initialAffiliateProducts } from './AffiliateProductData';
 import './index.css';
 
 function App() {
   // Force reset localStorage if it's corrupted or empty
   const BOOKS_VERSION = '1.2';
+  const AFFILIATE_VERSION = '1.0';
   
   const [products, setProducts] = useState(() => {
     const savedVersion = localStorage.getItem('booksVersion');
@@ -37,6 +39,35 @@ function App() {
     // Fallback to initial products
     localStorage.setItem('products', JSON.stringify(initialProducts));
     return initialProducts;
+  });
+
+  const [affiliateProducts, setAffiliateProducts] = useState(() => {
+    const savedVersion = localStorage.getItem('affiliateVersion');
+    const saved = localStorage.getItem('affiliateProducts');
+    
+    if (savedVersion !== AFFILIATE_VERSION || !saved) {
+      console.log('Initializing affiliate products from AffiliateProductData');
+      localStorage.setItem('affiliateVersion', AFFILIATE_VERSION);
+      localStorage.setItem('affiliateProducts', JSON.stringify(initialAffiliateProducts));
+      return initialAffiliateProducts;
+    }
+    
+    try {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed;
+      }
+    } catch (e) {
+      console.error("Failed to parse affiliate products", e);
+    }affiliate products to localStorage
+  useEffect(() => {
+    localStorage.setItem('affiliateProducts', JSON.stringify(affiliateProducts));
+  }, [affiliateProducts]);
+
+  // Save 
+    
+    localStorage.setItem('affiliateProducts', JSON.stringify(initialAffiliateProducts));
+    return initialAffiliateProducts;
   });
 
   const [favorites, setFavorites] = useState(() => {
@@ -85,10 +116,17 @@ function App() {
                   favorites={favorites} 
                   toggleFavorite={toggleFavorite} 
                 />
+                <Admin 
+                  products={products} 
+                  setProducts={setProducts}
+                  affiliateProducts={affiliateProducts}
+                  setAffiliateProducts={setAffiliateProducts}
+                />
               } 
             />
             <Route 
-              path="/admin" 
+              path="/products" 
+              element={<Products affiliateProducts={affiliateProducts}
               element={<Admin products={products} setProducts={setProducts} />} 
             />
             <Route 

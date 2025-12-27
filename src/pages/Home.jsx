@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import ProductCard from '../ProductCard';
 import '../index.css';
 import { Link, useNavigate } from 'react-router-dom';
-import { ArrowUp, Share2, Linkedin, Instagram } from 'lucide-react';
+import { ArrowUp, Share2, Linkedin, Instagram, ShoppingBag } from 'lucide-react';
 import { useToast } from '../context/ToastContext';
 
 function Home({ products, favorites, toggleFavorite }) {
@@ -198,6 +198,13 @@ function Home({ products, favorites, toggleFavorite }) {
                         >
                             <Share2 size={18} /> Share
                         </button>
+                        <Link 
+                            to="/products"
+                            className="products-link"
+                            aria-label="View affiliate products"
+                        >
+                            <ShoppingBag size={18} /> Products
+                        </Link>
                     </div>
                 </div>
             </nav>

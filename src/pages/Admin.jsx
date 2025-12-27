@@ -110,7 +110,19 @@ function Admin({ products, setProducts, affiliateProducts, setAffiliateProducts 
             });
         }
     };
-activeTab === 'books') {
+
+    const cancelEdit = () => {
+        setEditingId(null);
+        setIsAdding(false);
+        setFormData({});
+    };
+
+    const handleChange = (e) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const saveProduct = () => {
+        if (activeTab === 'books') {
             if (!formData.title || !formData.author) {
                 showToast('Please fill in title and author', 'error');
                 return;

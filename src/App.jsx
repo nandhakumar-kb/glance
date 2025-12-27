@@ -84,6 +84,11 @@ function App() {
     localStorage.setItem('products', JSON.stringify(products));
   }, [products]);
 
+  // Save affiliate products to localStorage
+  useEffect(() => {
+    localStorage.setItem('affiliateProducts', JSON.stringify(affiliateProducts));
+  }, [affiliateProducts]);
+
   // Save favorites to localStorage
   useEffect(() => {
     localStorage.setItem('favorites', JSON.stringify(favorites));
@@ -111,6 +116,11 @@ function App() {
                   favorites={favorites} 
                   toggleFavorite={toggleFavorite} 
                 />
+              } 
+            />
+            <Route 
+              path="/admin" 
+              element={
                 <Admin 
                   products={products} 
                   setProducts={setProducts}
@@ -121,12 +131,7 @@ function App() {
             />
             <Route 
               path="/products" 
-              element={<Products affiliateProducts={affiliateProducts}
-              element={<Admin products={products} setProducts={setProducts} />} 
-            />
-            <Route 
-              path="/products" 
-              element={<Products />} 
+              element={<Products affiliateProducts={affiliateProducts} />} 
             />
             <Route path="*" element={<NotFound />} />
           </Routes>

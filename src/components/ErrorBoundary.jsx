@@ -1,7 +1,18 @@
+/**
+ * Error Boundary Component
+ * Catches JavaScript errors in child component tree and displays fallback UI.
+ * Provides recovery options with try again and home navigation.
+ */
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Home, RefreshCw } from 'lucide-react';
+import '../styles/ErrorBoundary.css';
 
+/**
+ * Error boundary for graceful error handling
+ * @class ErrorBoundary
+ * @extends {React.Component}
+ */
 class ErrorBoundary extends React.Component {
     constructor(props) {
         super(props);
@@ -23,64 +34,22 @@ class ErrorBoundary extends React.Component {
     render() {
         if (this.state.hasError) {
             return (
-                <div style={{
-                    minHeight: '100vh',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    background: 'var(--bg-color)',
-                    padding: '2rem'
-                }}>
-                    <div style={{
-                        textAlign: 'center',
-                        maxWidth: '500px'
-                    }}>
-                        <h1 style={{
-                            fontSize: '3rem',
-                            marginBottom: '1rem',
-                            color: 'var(--text-primary)'
-                        }}>Oops!</h1>
-                        <p style={{
-                            color: 'var(--text-secondary)',
-                            marginBottom: '2rem',
-                            fontSize: '1.1rem'
-                        }}>
+                <div className="error-boundary-container">
+                    <div className="error-boundary-content">
+                        <h1 className="error-boundary-title">Oops!</h1>
+                        <p className="error-boundary-text">
                             Something went wrong. We're sorry for the inconvenience.
                         </p>
-                        <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                        <div className="error-boundary-actions">
                             <button
                                 onClick={this.handleReset}
-                                style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '0.5rem',
-                                    padding: '0.75rem 1.5rem',
-                                    background: 'var(--accent-blue)',
-                                    color: 'white',
-                                    border: 'none',
-                                    borderRadius: '8px',
-                                    cursor: 'pointer',
-                                    fontSize: '1rem',
-                                    fontWeight: '600'
-                                }}
+                                className="error-boundary-btn error-boundary-btn-primary"
                             >
                                 <RefreshCw size={18} /> Try Again
                             </button>
                             <Link
                                 to="/"
-                                style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '0.5rem',
-                                    padding: '0.75rem 1.5rem',
-                                    background: 'rgba(255, 255, 255, 0.1)',
-                                    color: 'var(--text-primary)',
-                                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                                    borderRadius: '8px',
-                                    textDecoration: 'none',
-                                    fontSize: '1rem',
-                                    fontWeight: '600'
-                                }}
+                                className="error-boundary-btn error-boundary-btn-secondary"
                             >
                                 <Home size={18} /> Go Home
                             </Link>

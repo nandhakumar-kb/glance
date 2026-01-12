@@ -1,3 +1,21 @@
+/**
+ * Product Data - Book Collection
+ * Default book collection with affiliate links for India and USA.
+ * Each product includes cover image, author, and optional redirect URLs.
+ * @module ProductData
+ */
+
+/**
+ * Default book collection
+ * @type {Array<Object>}
+ * @property {number} id - Unique product identifier
+ * @property {string} title - Book title
+ * @property {string} author - Book author
+ * @property {string} image - Cover image URL
+ * @property {string} affiliateLinkIN - India affiliate purchase link
+ * @property {string} affiliateLinkUS - USA affiliate purchase link
+ * @property {string} [redirectUrl] - Optional external redirect link
+ */
 export const products = [
   {
     id: 1,

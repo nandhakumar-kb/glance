@@ -1,10 +1,25 @@
+/**
+ * Admin Dashboard Component
+ * Secure admin panel for managing books and affiliate products.
+ * Features password authentication, CRUD operations, and form validation.
+ */
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { Trash2, Edit, Plus, Save, X, ArrowLeft, Lock, Eye, EyeOff, LogOut, Book, ShoppingBag } from 'lucide-react';
 import { useToast } from '../context/ToastContext';
-import '../index.css';
-import '../Admin.css';
+import { ADMIN_PASSWORD, ADMIN_TABS } from '../constants';
+import '../styles/Admin.css';
 
+/**
+ * Admin dashboard for content management
+ * @param {Object} props - Component props
+ * @param {Array} props.products - Books array
+ * @param {Function} props.setProducts - Books state setter
+ * @param {Array} props.affiliateProducts - Affiliate products array
+ * @param {Function} props.setAffiliateProducts - Affiliate products state setter
+ * @returns {React.Component} Admin page component
+ */
 function Admin({ products, setProducts, affiliateProducts, setAffiliateProducts }) {
     const { showToast } = useToast();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -14,11 +29,12 @@ function Admin({ products, setProducts, affiliateProducts, setAffiliateProducts 
     const [editingId, setEditingId] = useState(null);
     const [formData, setFormData] = useState({});
     const [isAdding, setIsAdding] = useState(false);
-    const [activeTab, setActiveTab] = useState('books'); // 'books' or 'affiliate'
+    const [activeTab, setActiveTab] = useState(ADMIN_TABS.BOOKS);
+    const [formErrors, setFormErrors] = useState({});
 
     const handleLogin = (e) => {
         e.preventDefault();
-        if (passwordInput === 'admin123') {
+        if (passwordInput === ADMIN_PASSWORD) {
             setIsAuthenticated(true);
             setLoginError('');
             showToast('Welcome to Admin Dashboard!', 'success');
@@ -58,8 +74,8 @@ function Admin({ products, setProducts, affiliateProducts, setAffiliateProducts 
                                     placeholder="Enter your password"
                                     className={loginError ? 'error' : ''}
                                 />
-                                <button 
-                                    type="button" 
+                                <button
+                                    type="button"
                                     className="toggle-password"
                                     onClick={() => setShowPassword(!showPassword)}
                                 >
@@ -84,12 +100,14 @@ function Admin({ products, setProducts, affiliateProducts, setAffiliateProducts 
         setEditingId(product.id);
         setFormData({ ...product });
         setIsAdding(false);
+        setFormErrors({});
     };
 
     const startAdd = () => {
         setIsAdding(true);
         setEditingId(null);
-        if (activeTab === 'books') {
+        setFormErrors({});
+        if (activeTab === ADMIN_TABS.BOOKS) {
             setFormData({
                 id: Date.now(),
                 title: '',
@@ -115,19 +133,73 @@ function Admin({ products, setProducts, affiliateProducts, setAffiliateProducts 
         setEditingId(null);
         setIsAdding(false);
         setFormData({});
+        setFormErrors({});
     };
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+        // Clear error for this field when user starts typing
+        if (formErrors[e.target.name]) {
+            setFormErrors({ ...formErrors, [e.target.name]: '' });
+        }
+    };
+
+    const validateForm = () => {
+        const errors = {};
+
+        if (activeTab === ADMIN_TABS.BOOKS) {
+            if (!formData.title?.trim()) {
+                errors.title = 'Title is required';
+            }
+            if (!formData.author?.trim()) {
+                errors.author = 'Author is required';
+            }
+            if (formData.image && !isValidUrl(formData.image)) {
+                errors.image = 'Invalid URL format';
+            }
+            if (formData.affiliateLinkIN && !isValidUrl(formData.affiliateLinkIN)) {
+                errors.affiliateLinkIN = 'Invalid URL format';
+            }
+            if (formData.affiliateLinkUS && !isValidUrl(formData.affiliateLinkUS)) {
+                errors.affiliateLinkUS = 'Invalid URL format';
+            }
+        } else {
+            if (!formData.title?.trim()) {
+                errors.title = 'Title is required';
+            }
+            if (!formData.price?.trim()) {
+                errors.price = 'Price is required';
+            }
+            if (!formData.affiliateLink?.trim()) {
+                errors.affiliateLink = 'Affiliate link is required';
+            } else if (!isValidUrl(formData.affiliateLink)) {
+                errors.affiliateLink = 'Invalid URL format';
+            }
+            if (formData.image && !isValidUrl(formData.image)) {
+                errors.image = 'Invalid URL format';
+            }
+        }
+
+        setFormErrors(errors);
+        return Object.keys(errors).length === 0;
+    };
+
+    const isValidUrl = (string) => {
+        try {
+            new URL(string);
+            return true;
+        } catch (_) {
+            return false;
+        }
     };
 
     const saveProduct = () => {
-        if (activeTab === 'books') {
-            if (!formData.title || !formData.author) {
-                showToast('Please fill in title and author', 'error');
-                return;
-            }
-            
+        if (!validateForm()) {
+            showToast('Please fix the errors in the form', 'error');
+            return;
+        }
+
+        if (activeTab === ADMIN_TABS.BOOKS) {
             if (isAdding) {
                 setProducts([...products, formData]);
                 showToast('Book added successfully!', 'success');
@@ -136,11 +208,6 @@ function Admin({ products, setProducts, affiliateProducts, setAffiliateProducts 
                 showToast('Book updated successfully!', 'success');
             }
         } else {
-            if (!formData.title || !formData.price || !formData.affiliateLink) {
-                showToast('Please fill in required fields', 'error');
-                return;
-            }
-            
             if (isAdding) {
                 setAffiliateProducts([...affiliateProducts, formData]);
                 showToast('Product added successfully!', 'success');
@@ -153,7 +220,7 @@ function Admin({ products, setProducts, affiliateProducts, setAffiliateProducts 
     };
 
     const deleteProduct = (id) => {
-        if (activeTab === 'books') {
+        if (activeTab === ADMIN_TABS.BOOKS) {
             if (window.confirm('Are you sure you want to delete this book?')) {
                 setProducts(products.filter(p => p.id !== id));
                 showToast('Book deleted successfully', 'success');
@@ -166,8 +233,8 @@ function Admin({ products, setProducts, affiliateProducts, setAffiliateProducts 
         }
     };
 
-    const currentProducts = activeTab === 'books' ? products : affiliateProducts;
-    const productType = activeTab === 'books' ? 'Book' : 'Product';
+    const currentProducts = activeTab === ADMIN_TABS.BOOKS ? products : affiliateProducts;
+    const productType = activeTab === ADMIN_TABS.BOOKS ? 'Book' : 'Product';
 
     return (
         <div className="admin-dashboard">
@@ -193,16 +260,16 @@ function Admin({ products, setProducts, affiliateProducts, setAffiliateProducts 
 
             {/* Tabs */}
             <div className="admin-tabs">
-                <button 
-                    className={`tab-btn ${activeTab === 'books' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('books')}
+                <button
+                    className={`tab-btn ${activeTab === ADMIN_TABS.BOOKS ? 'active' : ''}`}
+                    onClick={() => setActiveTab(ADMIN_TABS.BOOKS)}
                 >
                     <Book size={20} />
                     Books ({products.length})
                 </button>
-                <button 
-                    className={`tab-btn ${activeTab === 'affiliate' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('affiliate')}
+                <button
+                    className={`tab-btn ${activeTab === ADMIN_TABS.AFFILIATE ? 'active' : ''}`}
+                    onClick={() => setActiveTab(ADMIN_TABS.AFFILIATE)}
                 >
                     <ShoppingBag size={20} />
                     Affiliate Products ({affiliateProducts.length})
@@ -222,33 +289,39 @@ function Admin({ products, setProducts, affiliateProducts, setAffiliateProducts 
                         <div className="modal-body">
                             <div className="form-group">
                                 <label>Title *</label>
-                                <input 
-                                    name="title" 
-                                    value={formData.title || ''} 
-                                    onChange={handleChange} 
-                                    placeholder={`Enter ${activeTab === 'books' ? 'book' : 'product'} title`} 
+                                <input
+                                    name="title"
+                                    value={formData.title || ''}
+                                    onChange={handleChange}
+                                    placeholder={`Enter ${activeTab === ADMIN_TABS.BOOKS ? 'book' : 'product'} title`}
+                                    className={formErrors.title ? 'error' : ''}
                                 />
+                                {formErrors.title && <span className="error-message">{formErrors.title}</span>}
                             </div>
-                            
-                            {activeTab === 'books' ? (
+
+                            {activeTab === ADMIN_TABS.BOOKS ? (
                                 <>
                                     <div className="form-group">
                                         <label>Author *</label>
-                                        <input 
-                                            name="author" 
-                                            value={formData.author || ''} 
-                                            onChange={handleChange} 
-                                            placeholder="Enter author name" 
+                                        <input
+                                            name="author"
+                                            value={formData.author || ''}
+                                            onChange={handleChange}
+                                            placeholder="Enter author name"
+                                            className={formErrors.author ? 'error' : ''}
                                         />
+                                        {formErrors.author && <span className="error-message">{formErrors.author}</span>}
                                     </div>
                                     <div className="form-group">
                                         <label>Cover Image URL</label>
-                                        <input 
-                                            name="image" 
-                                            value={formData.image || ''} 
-                                            onChange={handleChange} 
-                                            placeholder="https://example.com/image.jpg" 
+                                        <input
+                                            name="image"
+                                            value={formData.image || ''}
+                                            onChange={handleChange}
+                                            placeholder="https://example.com/image.jpg"
+                                            className={formErrors.image ? 'error' : ''}
                                         />
+                                        {formErrors.image && <span className="error-message">{formErrors.image}</span>}
                                         {formData.image && (
                                             <div className="image-preview">
                                                 <img src={formData.image} alt="Preview" onError={(e) => e.target.style.display = 'none'} />
@@ -257,43 +330,49 @@ function Admin({ products, setProducts, affiliateProducts, setAffiliateProducts 
                                     </div>
                                     <div className="form-group">
                                         <label>India Affiliate Link</label>
-                                        <input 
-                                            name="affiliateLinkIN" 
-                                            value={formData.affiliateLinkIN || ''} 
-                                            onChange={handleChange} 
-                                            placeholder="https://amzn.to/..." 
+                                        <input
+                                            name="affiliateLinkIN"
+                                            value={formData.affiliateLinkIN || ''}
+                                            onChange={handleChange}
+                                            placeholder="https://amzn.to/..."
+                                            className={formErrors.affiliateLinkIN ? 'error' : ''}
                                         />
+                                        {formErrors.affiliateLinkIN && <span className="error-message">{formErrors.affiliateLinkIN}</span>}
                                     </div>
                                     <div className="form-group">
                                         <label>USA Affiliate Link</label>
-                                        <input 
-                                            name="affiliateLinkUS" 
-                                            value={formData.affiliateLinkUS || ''} 
-                                            onChange={handleChange} 
-                                            placeholder="https://amzn.to/..." 
+                                        <input
+                                            name="affiliateLinkUS"
+                                            value={formData.affiliateLinkUS || ''}
+                                            onChange={handleChange}
+                                            placeholder="https://amzn.to/..."
+                                            className={formErrors.affiliateLinkUS ? 'error' : ''}
                                         />
+                                        {formErrors.affiliateLinkUS && <span className="error-message">{formErrors.affiliateLinkUS}</span>}
                                     </div>
                                 </>
                             ) : (
                                 <>
                                     <div className="form-group">
                                         <label>Description</label>
-                                        <textarea 
-                                            name="description" 
-                                            value={formData.description || ''} 
-                                            onChange={handleChange} 
+                                        <textarea
+                                            name="description"
+                                            value={formData.description || ''}
+                                            onChange={handleChange}
                                             placeholder="Enter product description"
                                             rows="3"
                                         />
                                     </div>
                                     <div className="form-group">
                                         <label>Image URL</label>
-                                        <input 
-                                            name="image" 
-                                            value={formData.image || ''} 
-                                            onChange={handleChange} 
-                                            placeholder="https://example.com/image.jpg" 
+                                        <input
+                                            name="image"
+                                            value={formData.image || ''}
+                                            onChange={handleChange}
+                                            placeholder="https://example.com/image.jpg"
+                                            className={formErrors.image ? 'error' : ''}
                                         />
+                                        {formErrors.image && <span className="error-message">{formErrors.image}</span>}
                                         {formData.image && (
                                             <div className="image-preview">
                                                 <img src={formData.image} alt="Preview" onError={(e) => e.target.style.display = 'none'} />
@@ -302,29 +381,33 @@ function Admin({ products, setProducts, affiliateProducts, setAffiliateProducts 
                                     </div>
                                     <div className="form-group">
                                         <label>Price *</label>
-                                        <input 
-                                            name="price" 
-                                            value={formData.price || ''} 
-                                            onChange={handleChange} 
-                                            placeholder="$99.99" 
+                                        <input
+                                            name="price"
+                                            value={formData.price || ''}
+                                            onChange={handleChange}
+                                            placeholder="$99.99"
+                                            className={formErrors.price ? 'error' : ''}
                                         />
+                                        {formErrors.price && <span className="error-message">{formErrors.price}</span>}
                                     </div>
                                     <div className="form-group">
                                         <label>Affiliate Link *</label>
-                                        <input 
-                                            name="affiliateLink" 
-                                            value={formData.affiliateLink || ''} 
-                                            onChange={handleChange} 
-                                            placeholder="https://amzn.to/..." 
+                                        <input
+                                            name="affiliateLink"
+                                            value={formData.affiliateLink || ''}
+                                            onChange={handleChange}
+                                            placeholder="https://amzn.to/..."
+                                            className={formErrors.affiliateLink ? 'error' : ''}
                                         />
+                                        {formErrors.affiliateLink && <span className="error-message">{formErrors.affiliateLink}</span>}
                                     </div>
                                     <div className="form-group">
                                         <label>Category</label>
-                                        <input 
-                                            name="category" 
-                                            value={formData.category || ''} 
-                                            onChange={handleChange} 
-                                            placeholder="Electronics, Fitness, etc." 
+                                        <input
+                                            name="category"
+                                            value={formData.category || ''}
+                                            onChange={handleChange}
+                                            placeholder="Electronics, Fitness, etc."
                                         />
                                     </div>
                                 </>
@@ -403,5 +486,12 @@ function Admin({ products, setProducts, affiliateProducts, setAffiliateProducts 
         </div>
     );
 }
+
+Admin.propTypes = {
+    products: PropTypes.array.isRequired,
+    setProducts: PropTypes.func.isRequired,
+    affiliateProducts: PropTypes.array.isRequired,
+    setAffiliateProducts: PropTypes.func.isRequired,
+};
 
 export default Admin;

@@ -4,39 +4,93 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-color);
+  background: linear-gradient(135deg, rgba(10, 10, 10, 0.98), rgba(22, 22, 22, 0.98));
   padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.admin-login-container::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(251, 191, 36, 0.05) 0%, transparent 70%);
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .login-card {
-  background: var(--card-bg);
+  background: rgba(22, 22, 22, 0.95);
+  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
+  border-radius: 20px;
   padding: 3rem;
   width: 100%;
-  max-width: 420px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  max-width: 450px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7), 0 0 1px rgba(251, 191, 36, 0.3);
+  position: relative;
+  z-index: 1;
+  animation: slideUpFade 0.6s ease-out;
+}
+
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .login-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
 }
 
 .login-icon {
-  color: var(--accent-orange);
+  color: var(--accent-yellow);
   margin-bottom: 1rem;
+  filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.5));
+  animation: iconFloat 3s ease-in-out infinite;
+}
+
+@keyframes iconFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .login-header h1 {
-  font-size: 1.75rem;
-  margin-bottom: 0.5rem;
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
   color: var(--text-primary);
+  background: linear-gradient(135deg, var(--accent-yellow), var(--accent-blue));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
 }
 
 .login-header p {
   color: var(--text-secondary);
   font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 .login-form {
@@ -51,72 +105,134 @@
 
 .password-input-wrapper input {
   width: 100%;
-  padding: 1rem 3rem 1rem 1rem;
-  background: rgba(0, 0, 0, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  padding: 1.1rem 3.5rem 1.1rem 1.25rem;
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
   color: var(--text-primary);
   font-size: 1rem;
-  transition: all 0.3s;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.password-input-wrapper input::placeholder {
+  color: var(--text-secondary);
+}
+
+.password-input-wrapper input:hover {
+  border-color: rgba(251, 191, 36, 0.3);
+  background: rgba(0, 0, 0, 0.6);
 }
 
 .password-input-wrapper input:focus {
   outline: none;
   border-color: var(--accent-blue);
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+  background: rgba(0, 0, 0, 0.7);
+  transform: translateY(-2px);
 }
 
 .password-input-wrapper input.error {
-  border-color: #ff4444;
+  border-color: #ef4444;
+  animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
 }
 
 .toggle-password {
   position: absolute;
-  right: 0.75rem;
+  right: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  background: none;
-  border: none;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
   color: var(--text-secondary);
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0.6rem;
   display: flex;
   align-items: center;
-  transition: color 0.2s;
+  transition: all 0.3s ease;
 }
 
 .toggle-password:hover {
   color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-50%) scale(1.1);
 }
 
 .error-message {
-  color: #ff4444;
-  font-size: 0.85rem;
+  color: #ef4444;
+  font-size: 0.875rem;
   margin-top: 0.5rem;
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .login-button {
-  padding: 1.1rem;
-  background: linear-gradient(135deg, #f59e0b 0%, #3b82f6 50%, #8b5cf6 100%);
-  background-size: 200% 200%;
-  color: white;
-  border: 2px solid rgba(249, 115, 22, 0.5);
-  border-radius: 10px;
+  padding: 1.25rem;
+  background: linear-gradient(135deg, var(--accent-yellow), var(--accent-blue));
+  color: #0a0a0a;
+  border: none;
+  border-radius: 12px;
   font-size: 1.05rem;
   font-weight: 700;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  box-shadow: 0 6px 20px rgba(249, 115, 22, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.2);
+  gap: 0.75rem;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 10px 30px rgba(251, 191, 36, 0.4);
   position: relative;
   overflow: hidden;
-  animation: shimmer 3s ease-in-out infinite;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
+}
+
+.login-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  transform: translate(-50%, -50%);
+  transition: width 0.5s, height 0.5s;
+}
+
+.login-button:hover::after {
+  width: 400px;
+  height: 400px;
+}
+
+.login-button:hover {
+  background: linear-gradient(135deg, #fcd34d, #60a5fa);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(251, 191, 36, 0.6);
+}
+
+.login-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 25px rgba(251, 191, 36, 0.5);
 }
 
 .login-button::before {

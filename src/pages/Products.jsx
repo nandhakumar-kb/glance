@@ -1,23 +1,48 @@
-import React, { useState, useEffect } from 'react';
+/**
+ * Products Page Component
+ * Displays affiliate products with search and category filtering.
+ * Shows product cards with affiliate purchase links.
+ */
+import React, { useState, useEffect, useMemo } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import AffiliateProductCard from '../components/AffiliateProductCard';
 import { ArrowLeft, Search, Filter } from 'lucide-react';
-import '../index.css';
+import { SkeletonGrid } from '../components/SkeletonLoader';
+import EmptyState from '../components/EmptyState';
+import { TIMINGS, CATEGORIES } from '../constants';
+import '../styles/Products.css';
 
+/**
+ * Affiliate products listing page
+ * @param {Object} props - Component props
+ * @param {Array} props.affiliateProducts - Array of affiliate product objects
+ * @returns {React.Component} Products page component
+ */
 function Products({ affiliateProducts = [] }) {
     const [searchQuery, setSearchQuery] = useState('');
-    const [selectedCategory, setSelectedCategory] = useState('All');
-    const [filteredProducts, setFilteredProducts] = useState(affiliateProducts);
+    const [selectedCategory, setSelectedCategory] = useState(CATEGORIES.ALL);
+    const [isLoading, setIsLoading] = useState(true);
 
     // Get unique categories
-    const categories = ['All', ...new Set(affiliateProducts.map(p => p.category))];
+    const categories = useMemo(() => {
+        return [CATEGORIES.ALL, ...new Set(affiliateProducts.map(p => p.category))];
+    }, [affiliateProducts]);
 
-    // Filter products based on search and category
+    // Initial loading
     useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, TIMINGS.PRODUCTS_LOADING_DELAY);
+        return () => clearTimeout(timer);
+    }, []);
+
+    // Filter products based on search and category with useMemo
+    const filteredProducts = useMemo(() => {
         let filtered = affiliateProducts;
 
         // Filter by category
-        if (selectedCategory !== 'All') {
+        if (selectedCategory !== CATEGORIES.ALL) {
             filtered = filtered.filter(p => p.category === selectedCategory);
         }
 
@@ -30,18 +55,21 @@ function Products({ affiliateProducts = [] }) {
             );
         }
 
-        setFilteredProducts(filtered);
+        return filtered;
     }, [searchQuery, selectedCategory, affiliateProducts]);
 
     return (
-        <div className="home-container">
+        <div className="products-container">
             {/* Header */}
             <header className="header">
                 <div className="header-content">
                     <Link to="/" className="back-btn" aria-label="Back to home">
                         <ArrowLeft size={24} />
                     </Link>
-                    <h1 className="logo">Affiliate Products</h1>
+                    <div className="header-title">
+                        <h1 className="logo">Recommended Products</h1>
+                        <p className="header-subtitle">Curated selections just for you</p>
+                    </div>
                 </div>
             </header>
 
@@ -81,21 +109,27 @@ function Products({ affiliateProducts = [] }) {
             </div>
 
             {/* Products Grid */}
-            <div className="products-grid">
-                {filteredProducts.length > 0 ? (
-                    filteredProducts.map(product => (
-                        <AffiliateProductCard 
-                            key={product.id} 
-                            product={product}
-                        />
-                    ))
-                ) : (
-                    <div className="no-results">
-                        <h2>No products found</h2>
-                        <p>Try adjusting your search or filters</p>
-                    </div>
-                )}
-            </div>
+            {isLoading ? (
+                <SkeletonGrid count={4} />
+            ) : filteredProducts.length > 0 ? (
+                <div className="products-grid product-grid">
+                    {filteredProducts.map((product, index) => (
+                        <div
+                            key={product.id}
+                            className="product-card-wrapper"
+                            style={{ animationDelay: `${index * 0.05}s` }}
+                        >
+                            <AffiliateProductCard product={product} />
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <EmptyState
+                    type="products"
+                    title="No products found"
+                    description="Try adjusting your search or browse all categories"
+                />
+            )}
 
             {/* Footer */}
             <footer className="footer">
@@ -104,5 +138,19 @@ function Products({ affiliateProducts = [] }) {
         </div>
     );
 }
+
+Products.propTypes = {
+    affiliateProducts: PropTypes.arrayOf(
+        PropTypes.shape({
+            id: PropTypes.number.isRequired,
+            title: PropTypes.string.isRequired,
+            category: PropTypes.string,
+        })
+    ),
+};
+
+Products.defaultProps = {
+    affiliateProducts: [],
+};
 
 export default Products;

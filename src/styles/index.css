@@ -59,7 +59,7 @@ html {
 body {
   font-family: var(--font-family);
   background-color: var(--bg-color);
-  background-image: 
+  background-image:
     radial-gradient(at 0% 0%, rgba(251, 191, 36, 0.03) 0px, transparent 50%),
     radial-gradient(at 100% 0%, rgba(59, 130, 246, 0.03) 0px, transparent 50%),
     radial-gradient(at 100% 100%, rgba(251, 191, 36, 0.02) 0px, transparent 50%),
@@ -79,7 +79,7 @@ body::before {
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
+  background:
     linear-gradient(45deg, transparent 48%, rgba(251, 191, 36, 0.01) 50%, transparent 52%),
     linear-gradient(-45deg, transparent 48%, rgba(59, 130, 246, 0.01) 50%, transparent 52%);
   background-size: 100px 100px;
@@ -223,6 +223,7 @@ body::before {
 .products-link:active {
   transform: translateY(0);
 }
+
 .share-website-btn {
   display: flex;
   align-items: center;
@@ -244,9 +245,12 @@ body::before {
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.2);
   }
+
   50% {
     box-shadow: 0 4px 20px rgba(59, 130, 246, 0.6), 0 0 15px rgba(59, 130, 246, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.2);
   }
@@ -372,9 +376,12 @@ body::before {
 }
 
 @keyframes pulse-pinterest {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 8px 25px rgba(230, 0, 35, 0.5), 0 0 20px rgba(230, 0, 35, 0.3);
   }
+
   50% {
     box-shadow: 0 8px 30px rgba(230, 0, 35, 0.7), 0 0 25px rgba(230, 0, 35, 0.5);
   }
@@ -389,9 +396,12 @@ body::before {
 }
 
 @keyframes pulse-linkedin {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 8px 25px rgba(10, 102, 194, 0.5), 0 0 20px rgba(10, 102, 194, 0.3);
   }
+
   50% {
     box-shadow: 0 8px 30px rgba(10, 102, 194, 0.7), 0 0 25px rgba(10, 102, 194, 0.5);
   }
@@ -406,9 +416,12 @@ body::before {
 }
 
 @keyframes pulse-instagram {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 8px 25px rgba(228, 64, 95, 0.5), 0 0 20px rgba(245, 133, 41, 0.4);
   }
+
   50% {
     box-shadow: 0 8px 30px rgba(228, 64, 95, 0.7), 0 0 25px rgba(245, 133, 41, 0.6);
   }
@@ -423,9 +436,12 @@ body::before {
 }
 
 @keyframes pulse-threads {
-  0%, 100% {
+
+  0%,
+  100% {
     box-shadow: 0 8px 25px rgba(255, 255, 255, 0.4), 0 0 20px rgba(255, 255, 255, 0.3);
   }
+
   50% {
     box-shadow: 0 8px 30px rgba(255, 255, 255, 0.6), 0 0 25px rgba(255, 255, 255, 0.5);
   }
@@ -459,6 +475,7 @@ body::before {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -490,6 +507,7 @@ body::before {
     opacity: 0;
     transform: translateX(-30px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -578,6 +596,7 @@ body::before {
     opacity: 0;
     transform: translateX(30px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -785,6 +804,7 @@ body::before {
   display: flex;
   align-items: center;
   justify-content: center;
+  contain: layout style paint;
 }
 
 .image-container img {
@@ -793,6 +813,8 @@ body::before {
   object-fit: contain;
   transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s ease;
   filter: brightness(1);
+  will-change: transform, opacity;
+  content-visibility: auto;
 }
 
 .product-card:hover .image-container img {
@@ -913,9 +935,12 @@ body::before {
 }
 
 @keyframes shimmer {
-  0%, 100% {
+
+  0%,
+  100% {
     background-position: 0% 50%;
   }
+
   50% {
     background-position: 100% 50%;
   }
@@ -1364,6 +1389,7 @@ body::before {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -1452,7 +1478,7 @@ body::before {
     opacity: 0;
     transform: translateY(-10px);
   }
-  
+
   .product-card:hover .card-actions-top {
     opacity: 1;
     transform: translateY(0);
@@ -1496,15 +1522,20 @@ body::before {
 }
 
 @keyframes heartBeat {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
   }
+
   25% {
     transform: scale(1.2);
   }
+
   50% {
     transform: scale(1.1);
   }
+
   75% {
     transform: scale(1.25);
   }
@@ -1519,12 +1550,10 @@ body::before {
 .image-skeleton {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    90deg,
-    #1a1a1a 0%,
-    #252525 50%,
-    #1a1a1a 100%
-  );
+  background: linear-gradient(90deg,
+      #1a1a1a 0%,
+      #252525 50%,
+      #1a1a1a 100%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
@@ -1533,6 +1562,7 @@ body::before {
   0% {
     background-position: -200% 0;
   }
+
   100% {
     background-position: 200% 0;
   }
@@ -1577,10 +1607,13 @@ body::before {
 }
 
 @keyframes pulse-ring {
-  0%, 100% {
+
+  0%,
+  100% {
     transform: scale(1);
     opacity: 0.5;
   }
+
   50% {
     transform: scale(1.2);
     opacity: 0;
@@ -1605,6 +1638,7 @@ body::before {
     opacity: 0;
     transform: translateY(30px) scale(0.8);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -1621,6 +1655,7 @@ body::before {
     opacity: 0;
     transform: translateY(40px) scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
@@ -1692,6 +1727,7 @@ select:focus-visible {
 
 /* Reduced motion support */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -1707,11 +1743,11 @@ select:focus-visible {
   .product-card {
     border: 2px solid currentColor;
   }
-  
+
   .btn {
     border: 2px solid currentColor;
   }
-  
+
   .search-bar {
     border: 2px solid currentColor;
   }
@@ -1945,20 +1981,20 @@ select:focus-visible {
   .category-filter {
     gap: 0.5rem;
   }
-  
+
   .category-buttons {
     gap: 0.35rem;
   }
-  
+
   .category-btn {
     padding: 0.4rem 0.8rem;
     font-size: 0.85rem;
   }
-  
+
   .product-price-tag {
     font-size: 1rem;
   }
-  
+
   .products-link {
     padding: 0.65rem 1rem;
     font-size: 0.85rem;

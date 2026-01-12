@@ -303,6 +303,7 @@ function Home({ products, favorites, toggleFavorite }) {
                                     product={product}
                                     isFavorite={favorites.includes(product.id)}
                                     onToggleFavorite={() => toggleFavorite(product.id)}
+                                    priority={index < 4}
                                 />
                             </div>
                         ))}

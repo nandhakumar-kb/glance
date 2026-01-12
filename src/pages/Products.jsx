@@ -119,7 +119,7 @@ function Products({ affiliateProducts = [] }) {
                             className="product-card-wrapper"
                             style={{ animationDelay: `${index * 0.05}s` }}
                         >
-                            <AffiliateProductCard product={product} />
+                            <AffiliateProductCard product={product} priority={index < 4} />
                         </div>
                     ))}
                 </div>

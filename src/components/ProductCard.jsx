@@ -3,7 +3,7 @@
  * Displays book information with favorite, share, and purchase options.
  * Supports lazy loading images and external redirect links.
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Heart, Share2 } from 'lucide-react';
 import { useToast } from '../context/ToastContext';
@@ -23,11 +23,39 @@ import { useShare } from '../hooks/useShare';
  * @param {Function} props.onToggleFavorite - Callback for favorite toggle
  * @returns {React.Component} Product card component
  */
-const ProductCard = ({ product, isFavorite, onToggleFavorite }) => {
+const ProductCard = ({ product, isFavorite, onToggleFavorite, priority = false }) => {
     const { showToast } = useToast();
     const { share, isSharing } = useShare(showToast);
     const [imageLoaded, setImageLoaded] = useState(false);
     const [imageError, setImageError] = useState(false);
+    const [shouldLoad, setShouldLoad] = useState(priority);
+    const imageRef = useRef(null);
+
+    // Intersection Observer for efficient lazy loading
+    useEffect(() => {
+        if (priority || shouldLoad) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setShouldLoad(true);
+                        observer.disconnect();
+                    }
+                });
+            },
+            {
+                rootMargin: '50px', // Start loading 50px before image comes into view
+                threshold: 0.01
+            }
+        );
+
+        if (imageRef.current) {
+            observer.observe(imageRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, [priority, shouldLoad]);
 
     const handleShare = async () => {
         await share({
@@ -75,23 +103,29 @@ const ProductCard = ({ product, isFavorite, onToggleFavorite }) => {
                 className="image-container"
                 style={{ cursor: product.redirectUrl ? 'pointer' : 'default' }}
                 onClick={handleImageClick}
+                ref={imageRef}
             >
                 {!imageLoaded && !imageError && <div className="image-skeleton" />}
-                <img
-                    src={imageError ? 'https://via.placeholder.com/128x200/1a1a1a/666666?text=Cover+Unavailable' : product.image}
-                    alt={`${product.title} book cover`}
-                    loading="lazy"
-                    onLoad={() => setImageLoaded(true)}
-                    onError={() => {
-                        setImageError(true);
-                        setImageLoaded(true);
-                    }}
-                    style={{
-                        opacity: imageLoaded ? 1 : 0,
-                        cursor: product.redirectUrl ? 'pointer' : 'default',
-                        pointerEvents: 'auto'
-                    }}
-                />
+                {shouldLoad && (
+                    <img
+                        src={imageError ? 'https://via.placeholder.com/128x200/1a1a1a/666666?text=Cover+Unavailable' : product.image}
+                        alt={`${product.title} book cover`}
+                        width="280"
+                        height="280"
+                        fetchpriority={priority ? 'high' : 'auto'}
+                        decoding="async"
+                        onLoad={() => setImageLoaded(true)}
+                        onError={() => {
+                            setImageError(true);
+                            setImageLoaded(true);
+                        }}
+                        style={{
+                            opacity: imageLoaded ? 1 : 0,
+                            cursor: product.redirectUrl ? 'pointer' : 'default',
+                            pointerEvents: 'auto'
+                        }}
+                    />
+                )}
             </div>
             <div className="card-content">
                 <h3 className="product-title">{product.title}</h3>
@@ -134,6 +168,7 @@ ProductCard.propTypes = {
     }).isRequired,
     isFavorite: PropTypes.bool.isRequired,
     onToggleFavorite: PropTypes.func.isRequired,
+    priority: PropTypes.bool,
 };
 
 export default ProductCard;

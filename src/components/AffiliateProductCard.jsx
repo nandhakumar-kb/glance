@@ -3,7 +3,7 @@
  * Displays affiliate products with share functionality and purchase link.
  * Optimized for product recommendations and external offers.
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { Share2 } from 'lucide-react';
 import { useToast } from '../context/ToastContext';
@@ -20,11 +20,39 @@ import { useShare } from '../hooks/useShare';
  * @param {string} props.product.affiliateLink - Purchase link
  * @returns {React.Component} Affiliate product card
  */
-const AffiliateProductCard = ({ product }) => {
+const AffiliateProductCard = ({ product, priority = false }) => {
     const { showToast } = useToast();
     const { share, isSharing } = useShare(showToast);
     const [imageLoaded, setImageLoaded] = useState(false);
     const [imageError, setImageError] = useState(false);
+    const [shouldLoad, setShouldLoad] = useState(priority);
+    const imageRef = useRef(null);
+
+    // Intersection Observer for efficient lazy loading
+    useEffect(() => {
+        if (priority || shouldLoad) return;
+
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        setShouldLoad(true);
+                        observer.disconnect();
+                    }
+                });
+            },
+            {
+                rootMargin: '50px',
+                threshold: 0.01
+            }
+        );
+
+        if (imageRef.current) {
+            observer.observe(imageRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, [priority, shouldLoad]);
 
     const handleShare = async () => {
         await share({
@@ -49,19 +77,24 @@ const AffiliateProductCard = ({ product }) => {
                     <Share2 size={18} />
                 </button>
             </div>
-            <div className="image-container">
+            <div className="image-container" ref={imageRef}>
                 {!imageLoaded && !imageError && <div className="image-skeleton" />}
-                <img
-                    src={imageError ? 'https://via.placeholder.com/300x300/1a1a1a/666666?text=Product' : product.image}
-                    alt={product.title}
-                    loading="lazy"
-                    onLoad={() => setImageLoaded(true)}
-                    onError={() => {
-                        setImageError(true);
-                        setImageLoaded(true);
-                    }}
-                    style={{ opacity: imageLoaded ? 1 : 0 }}
-                />
+                {shouldLoad && (
+                    <img
+                        src={imageError ? 'https://via.placeholder.com/300x300/1a1a1a/666666?text=Product' : product.image}
+                        alt={product.title}
+                        width="300"
+                        height="300"
+                        fetchpriority={priority ? 'high' : 'auto'}
+                        decoding="async"
+                        onLoad={() => setImageLoaded(true)}
+                        onError={() => {
+                            setImageError(true);
+                            setImageLoaded(true);
+                        }}
+                        style={{ opacity: imageLoaded ? 1 : 0 }}
+                    />
+                )}
             </div>
             <div className="card-content">
                 <h3 className="product-title">{product.title}</h3>
@@ -96,6 +129,7 @@ AffiliateProductCard.propTypes = {
         affiliateLink: PropTypes.string.isRequired,
         category: PropTypes.string,
     }).isRequired,
+    priority: PropTypes.bool,
 };
 
 export default AffiliateProductCard;

@@ -1,62 +1,79 @@
-const CACHE_NAME = 'glanceread-v1';
-const urlsToCache = [
+const CACHE_NAME = 'glanceread-v2';
+
+// Critical resources needed for initial app shell (cached immediately)
+const CRITICAL_CACHE = [
     '/',
-    '/index.html',
-    '/src/main.jsx',
-    '/src/App.jsx',
-    '/src/styles/index.css',
+    '/index.html'
+];
+
+// Non-critical resources (cached in background after installation)
+const OPTIONAL_CACHE = [
     '/favicon.png',
     '/logo.png'
 ];
 
-// Install event - cache essential resources
+// Install event - cache only critical resources for fast installation
 self.addEventListener('install', (event) => {
     event.waitUntil(
         caches.open(CACHE_NAME)
-            .then((cache) => {
-                console.log('Opened cache');
-                return cache.addAll(urlsToCache);
-            })
-            .catch((error) => {
-                console.error('Cache installation failed:', error);
+            .then(async (cache) => {
+                // Cache critical resources with timeout protection
+                const criticalPromises = CRITICAL_CACHE.map(url =>
+                    fetchWithTimeout(url, 3000)
+                        .then(response => cache.put(url, response))
+                        .catch(err => console.warn(`Failed to cache ${url}:`, err))
+                );
+
+                await Promise.all(criticalPromises);
+                console.log('Critical resources cached');
+
+                // Cache optional resources without blocking installation
+                Promise.all(
+                    OPTIONAL_CACHE.map(url =>
+                        fetchWithTimeout(url, 5000)
+                            .then(response => cache.put(url, response))
+                            .catch(err => console.warn(`Optional cache failed for ${url}:`, err))
+                    )
+                );
             })
     );
     self.skipWaiting();
 });
 
-// Fetch event - serve from cache, fallback to network
+// Fetch with timeout helper
+function fetchWithTimeout(url, timeout = 3000) {
+    return Promise.race([
+        fetch(url),
+        new Promise((_, reject) =>
+            setTimeout(() => reject(new Error('Fetch timeout')), timeout)
+        )
+    ]);
+}
+
+// Fetch event - stale-while-revalidate strategy for better performance
 self.addEventListener('fetch', (event) => {
+    // Skip caching for non-GET requests
+    if (event.request.method !== 'GET') {
+        return;
+    }
+
     event.respondWith(
-        caches.match(event.request)
-            .then((response) => {
-                // Cache hit - return response
-                if (response) {
-                    return response;
-                }
-
-                return fetch(event.request).then(
-                    (response) => {
-                        // Check if we received a valid response
-                        if (!response || response.status !== 200 || response.type !== 'basic') {
-                            return response;
+        caches.open(CACHE_NAME).then(cache => {
+            return cache.match(event.request).then(cachedResponse => {
+                const fetchPromise = fetch(event.request)
+                    .then(networkResponse => {
+                        // Cache valid responses
+                        if (networkResponse && networkResponse.status === 200) {
+                            cache.put(event.request, networkResponse.clone());
                         }
+                        return networkResponse;
+                    })
+                    .catch(() => null);
 
-                        // Clone the response
-                        const responseToCache = response.clone();
-
-                        caches.open(CACHE_NAME)
-                            .then((cache) => {
-                                cache.put(event.request, responseToCache);
-                            });
-
-                        return response;
-                    }
-                );
-            })
-            .catch(() => {
-                // Return a custom offline page if available
-                return caches.match('/index.html');
-            })
+                // Return cached response immediately, update cache in background
+                return cachedResponse || fetchPromise || caches.match('/index.html');
+            });
+        })
     );
 });
 

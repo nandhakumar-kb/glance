@@ -1,0 +1,32 @@
+{
+    "name": "GlanceRead - Premium Books for Personal Growth",
+    "short_name": "GlanceRead",
+    "description": "Discover curated premium books that shape successful minds. Handpicked collection for your personal growth and library.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0a0a0a",
+    "theme_color": "#0a0a0a",
+    "orientation": "portrait-primary",
+    "icons": [
+        {
+            "src": "/favicon.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/logo.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "categories": [
+        "books",
+        "education",
+        "lifestyle"
+    ],
+    "scope": "/",
+    "lang": "en-US",
+    "dir": "ltr"
+}

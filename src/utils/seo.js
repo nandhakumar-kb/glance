@@ -182,12 +182,30 @@ export const generateCollectionStructuredData = (items, name) => ({
                         'shippingDestination': {
                             '@type': 'DefinedRegion',
                             'addressCountry': 'IN'
+                        },
+                        'deliveryTime': {
+                            '@type': 'ShippingDeliveryTime',
+                            'handlingTime': {
+                                '@type': 'QuantitativeValue',
+                                'minValue': 0,
+                                'maxValue': 1,
+                                'unitCode': 'DAY'
+                            },
+                            'transitTime': {
+                                '@type': 'QuantitativeValue',
+                                'minValue': 3,
+                                'maxValue': 7,
+                                'unitCode': 'DAY'
+                            }
                         }
                     },
                     'hasMerchantReturnPolicy': {
                         '@type': 'MerchantReturnPolicy',
+                        'applicableCountry': 'IN',
                         'returnPolicyCategory': 'https://schema.org/MerchantReturnFiniteReturnWindow',
-                        'merchantReturnDays': 30
+                        'merchantReturnDays': 30,
+                        'returnMethod': 'https://schema.org/ReturnByMail',
+                        'returnFees': 'https://schema.org/FreeReturn'
                     }
                 },
                 'aggregateRating': {

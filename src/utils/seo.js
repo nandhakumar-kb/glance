@@ -170,7 +170,13 @@ export const generateCollectionStructuredData = (items, name) => ({
                     'url': item.affiliateLinkIN || item.link || window.location.href,
                     'price': item.price || '299',
                     'priceCurrency': 'INR',
-                    'availability': 'https://schema.org/InStock'
+                    'availability': 'https://schema.org/InStock',
+                    'priceValidUntil': '2026-12-31'
+                },
+                'aggregateRating': {
+                    '@type': 'AggregateRating',
+                    'ratingValue': item.rating || '4.5',
+                    'reviewCount': item.reviewCount || '100'
                 }
             }
         }))

@@ -1,6 +1,42 @@
-# GlanceRead - Book Collection Platform
+# GlanceRead - Premium Book Collection Platform 📚
 
-A modern, responsive React application for curating and showcasing premium book collections with affiliate links.
+> Discover handpicked premium books that shape successful minds. A modern, SEO-optimized React application for curating and showcasing book collections.
+
+[![Live Demo](https://img.shields.io/badge/demo-live-success)](https://glanceread.vercel.app)
+[![React](https://img.shields.io/badge/React-19.2.0-blue)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-7.2.4-646CFF)](https://vitejs.dev/)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
+## ✨ Features
+
+### 📊 SEO & Performance Optimized
+- ✅ **Complete SEO Implementation** - Meta tags, Open Graph, Twitter Cards
+- ✅ **Structured Data (JSON-LD)** - Rich snippets for better search visibility
+- ✅ **Dynamic SEO** - Page-specific meta tags and schema
+- ✅ **XML Sitemap** - Optimized for search engine crawling
+- ✅ **Robots.txt** - Proper crawl directives
+- ✅ **Performance Headers** - Caching and security optimizations
+- ✅ **Mobile-First Design** - Responsive across all devices
+- ✅ **Progressive Web App (PWA)** - Installable with offline support
+
+### 🎨 User Experience
+- 🔍 **Smart Search** - Real-time search with suggestions
+- 💾 **Favorites System** - Save and manage favorite books
+- 🏷️ **Category Filtering** - Filter by productivity, finance, self-help, etc.
+- 🔄 **Sorting Options** - Sort by title, author, or category
+- 📱 **Share Functionality** - Web Share API integration
+- ⚡ **Skeleton Loading** - Smooth loading experience
+- 🎯 **Empty States** - Helpful UI for empty results
+- 🔔 **Toast Notifications** - User feedback system
+
+### 🛡️ Technical Excellence
+- ⚛️ **React 19** - Latest features and performance
+- 🚀 **Vite** - Lightning-fast development and builds
+- 🎯 **React Router** - Client-side routing
+- 📦 **Component-Based** - Modular and reusable architecture
+- 🔒 **Error Boundaries** - Graceful error handling
+- 🎨 **Modern UI** - Clean, minimal design
+- 📊 **Analytics Ready** - Google Analytics integration
 
 ## 📁 Project Structure
 

@@ -37,35 +37,53 @@
   <meta http-equiv="Expires" content="0" />
 
   <!-- Primary Meta Tags -->
-  <title>GlanceRead - Premium Books for Personal Growth</title>
-  <meta name="title" content="GlanceRead - Premium Books for Personal Growth" />
+  <title>GlanceRead - Discover Premium Books for Personal Growth & Success | Best Book Recommendations</title>
+  <meta name="title"
+    content="GlanceRead - Discover Premium Books for Personal Growth & Success | Best Book Recommendations" />
   <meta name="description"
-    content="Discover curated premium books that shape successful minds. Handpicked collection for your personal growth and library. Find the best books in productivity, finance, self-help and more." />
+    content="Discover handpicked premium books that shape successful minds. Get curated book recommendations in productivity, finance, self-help, business, and personal development. Build your ideal library with expert-selected bestsellers and must-read titles." />
   <meta name="keywords"
-    content="books, reading, personal growth, productivity, finance, self-help, book recommendations, best books" />
+    content="premium books, book recommendations, best books, personal growth books, productivity books, finance books, self-help books, business books, bestselling books, book collection, reading list, must-read books, success books, self-improvement, book curation, top books 2026" />
   <meta name="author" content="GlanceRead" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="language" content="English" />
+  <meta name="revisit-after" content="2 days" />
+  <meta name="rating" content="general" />
+  <meta name="distribution" content="global" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://glanceread.com/" />
-  <meta property="og:title" content="GlanceRead - Premium Books for Personal Growth" />
+  <meta property="og:url" content="https://glanceread.vercel.app/" />
+  <meta property="og:site_name" content="GlanceRead" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:title" content="GlanceRead - Discover Premium Books for Personal Growth & Success" />
   <meta property="og:description"
-    content="Discover curated premium books that shape successful minds. Handpicked collection for your personal growth and library." />
-  <meta property="og:image" content="/logo.png" />
+    content="Discover handpicked premium books that shape successful minds. Get curated book recommendations in productivity, finance, self-help, and business. Build your ideal library today." />
+  <meta property="og:image" content="https://glanceread.vercel.app/logo.png" />
+  <meta property="og:image:alt" content="GlanceRead - Premium Book Collection Platform" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
 
   <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://glanceread.com/" />
-  <meta property="twitter:title" content="GlanceRead - Premium Books for Personal Growth" />
-  <meta property="twitter:description"
-    content="Discover curated premium books that shape successful minds. Handpicked collection for your personal growth and library." />
-  <meta property="twitter:image" content="/logo.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://glanceread.vercel.app/" />
+  <meta name="twitter:title" content="GlanceRead - Discover Premium Books for Personal Growth & Success" />
+  <meta name="twitter:description"
+    content="Discover handpicked premium books that shape successful minds. Get curated book recommendations in productivity, finance, self-help, and business." />
+  <meta name="twitter:image" content="https://glanceread.vercel.app/logo.png" />
+  <meta name="twitter:image:alt" content="GlanceRead - Premium Book Collection Platform" />
+  <meta name="twitter:creator" content="@GlanceRead" />
+  <meta name="twitter:site" content="@GlanceRead" />
 
   <!-- Theme Color -->
   <meta name="theme-color" content="#0a0a0a" />
 
   <!-- Canonical URL -->
-  <link rel="canonical" href="https://glanceread.com/" />
+  <link rel="canonical" href="https://glanceread.vercel.app/" />
+
+  <!-- Alternate languages (if you plan to add them) -->
+  <link rel="alternate" hreflang="en" href="https://glanceread.vercel.app/" />
+  <link rel="alternate" hreflang="x-default" href="https://glanceread.vercel.app/" />
 
   <!-- Robots and Sitemap -->
   <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
@@ -74,15 +92,92 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "GlanceRead",
-    "url": "https://glanceread.com/",
-    "description": "Discover curated premium books that shape successful minds. Handpicked collection for your personal growth and library.",
-    "potentialAction": {
-      "@type": "SearchAction",
-      "target": "https://glanceread.com/?search={search_term_string}",
-      "query-input": "required name=search_term_string"
-    }
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://glanceread.vercel.app/#website",
+        "url": "https://glanceread.vercel.app/",
+        "name": "GlanceRead",
+        "description": "Discover handpicked premium books that shape successful minds. Get curated book recommendations in productivity, finance, self-help, and business.",
+        "publisher": {
+          "@id": "https://glanceread.vercel.app/#organization"
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://glanceread.vercel.app/?search={search_term_string}"
+          },
+          "query-input": "required name=search_term_string"
+        },
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "Organization",
+        "@id": "https://glanceread.vercel.app/#organization",
+        "name": "GlanceRead",
+        "url": "https://glanceread.vercel.app/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://glanceread.vercel.app/logo.png",
+          "width": 512,
+          "height": 512
+        },
+        "sameAs": [
+          "https://www.linkedin.com/company/glanceread",
+          "https://www.instagram.com/glanceread"
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "Customer Service",
+          "availableLanguage": ["English"]
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://glanceread.vercel.app/#webpage",
+        "url": "https://glanceread.vercel.app/",
+        "name": "GlanceRead - Discover Premium Books for Personal Growth & Success",
+        "description": "Discover handpicked premium books that shape successful minds. Get curated book recommendations in productivity, finance, self-help, and business.",
+        "isPartOf": {
+          "@id": "https://glanceread.vercel.app/#website"
+        },
+        "about": {
+          "@id": "https://glanceread.vercel.app/#organization"
+        },
+        "datePublished": "2026-01-01T00:00:00+00:00",
+        "dateModified": "2026-01-14T00:00:00+00:00",
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "ItemList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Premium Books",
+            "description": "Curated collection of premium books for personal growth"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Book Recommendations",
+            "description": "Expert-selected book recommendations across various categories"
+          }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://glanceread.vercel.app/"
+          }
+        ]
+      }
+    ]
   }
   </script>
 

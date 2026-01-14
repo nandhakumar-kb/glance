@@ -11,6 +11,7 @@ import { ArrowLeft, Search, Filter } from 'lucide-react';
 import { SkeletonGrid } from '../components/SkeletonLoader';
 import EmptyState from '../components/EmptyState';
 import { TIMINGS, CATEGORIES } from '../constants';
+import { updateSEO, generateCollectionStructuredData, generateBreadcrumbs } from '../utils/seo';
 import '../styles/Products.css';
 
 /**
@@ -27,6 +28,34 @@ function Products({ affiliateProducts = [] }) {
     // Get unique categories
     const categories = useMemo(() => {
         return [CATEGORIES.ALL, ...new Set(affiliateProducts.map(p => p.category))];
+    }, [affiliateProducts]);
+
+    // SEO: Update meta tags for products page
+    useEffect(() => {
+        updateSEO({
+            title: 'Curated Products - Premium Items for Book Lovers | GlanceRead',
+            description: 'Discover handpicked premium products carefully curated for book lovers and avid readers. Shop quality items including book accessories, reading essentials, and productivity tools.',
+            keywords: 'book accessories, reading products, premium book products, book lover gifts, reading essentials, bookmarks, book lights, reading accessories',
+            canonical: 'https://glanceread.vercel.app/products',
+            structuredData: generateCollectionStructuredData(affiliateProducts, 'Curated Products for Book Lovers')
+        });
+
+        // Add breadcrumbs
+        const breadcrumbs = generateBreadcrumbs([
+            { name: 'Home', url: 'https://glanceread.vercel.app/' },
+            { name: 'Products', url: 'https://glanceread.vercel.app/products' }
+        ]);
+
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.id = 'breadcrumb-data';
+        script.textContent = JSON.stringify(breadcrumbs);
+        document.head.appendChild(script);
+
+        return () => {
+            const existing = document.getElementById('breadcrumb-data');
+            if (existing) existing.remove();
+        };
     }, [affiliateProducts]);
 
     // Initial loading

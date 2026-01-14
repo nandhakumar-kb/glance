@@ -13,6 +13,7 @@ import { useShare } from '../hooks/useShare';
 import { SkeletonGrid } from '../components/SkeletonLoader';
 import EmptyState from '../components/EmptyState';
 import { TIMINGS, UI_THRESHOLDS, SORT_OPTIONS } from '../constants';
+import { updateSEO, generateCollectionStructuredData, generateBreadcrumbs } from '../utils/seo';
 
 /**
  * Home page with book collection and interactive features
@@ -34,6 +35,33 @@ function Home({ products, favorites, toggleFavorite }) {
     const [selectedSuggestion, setSelectedSuggestion] = useState(-1);
     const [sortBy, setSortBy] = useState(SORT_OPTIONS.DEFAULT);
     const [isLoading, setIsLoading] = useState(true);
+
+    // SEO: Update meta tags and structured data
+    useEffect(() => {
+        updateSEO({
+            title: 'GlanceRead - Discover Premium Books for Personal Growth & Success | Best Book Recommendations',
+            description: 'Discover handpicked premium books that shape successful minds. Get curated book recommendations in productivity, finance, self-help, business, and personal development. Build your ideal library with expert-selected bestsellers.',
+            keywords: 'premium books, book recommendations, best books, personal growth books, productivity books, finance books, self-help books, business books, bestselling books, book collection, reading list, must-read books, success books, self-improvement',
+            canonical: 'https://glanceread.vercel.app/',
+            structuredData: generateCollectionStructuredData(products, 'Premium Book Collection')
+        });
+
+        // Add breadcrumbs
+        const breadcrumbs = generateBreadcrumbs([
+            { name: 'Home', url: 'https://glanceread.vercel.app/' }
+        ]);
+
+        const script = document.createElement('script');
+        script.type = 'application/ld+json';
+        script.id = 'breadcrumb-data';
+        script.textContent = JSON.stringify(breadcrumbs);
+        document.head.appendChild(script);
+
+        return () => {
+            const existing = document.getElementById('breadcrumb-data');
+            if (existing) existing.remove();
+        };
+    }, [products]);
 
     // Initial loading simulation
     useEffect(() => {

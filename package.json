@@ -1,7 +1,26 @@
 {
-  "name": "glance",
+  "name": "glanceread",
+  "version": "1.0.0",
+  "description": "Discover handpicked premium books that shape successful minds. Get curated book recommendations in productivity, finance, self-help, and business.",
+  "keywords": [
+    "books",
+    "book recommendations",
+    "reading",
+    "personal growth",
+    "productivity",
+    "finance",
+    "self-help",
+    "business",
+    "curated books",
+    "bestsellers"
+  ],
+  "author": "GlanceRead",
+  "homepage": "https://glanceread.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/glanceread"
+  },
   "private": true,
-  "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",

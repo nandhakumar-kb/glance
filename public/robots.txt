@@ -1,5 +1,18 @@
 User-agent: *
 Allow: /
 Disallow: /admin
+Disallow: /admin/*
 
-Sitemap: https://glanceread.com/sitemap.xml
+# Allow all search engines to crawl important pages
+Allow: /products
+Allow: /*.js$
+Allow: /*.css$
+Allow: /*.png$
+Allow: /*.jpg$
+Allow: /*.jpeg$
+
+# Sitemap location
+Sitemap: https://glanceread.vercel.app/sitemap.xml
+
+# Crawl delay (optional, adjust if needed)
+Crawl-delay: 1

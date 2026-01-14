@@ -163,12 +163,14 @@ export const generateCollectionStructuredData = (items, name) => ({
             'item': {
                 '@type': 'Product',
                 'name': item.title,
+                'description': item.description || `${item.title} by ${item.author || 'Various Authors'}`,
                 'image': item.image,
                 'offers': {
                     '@type': 'Offer',
                     'url': item.affiliateLinkIN || item.link || window.location.href,
-                    'availability': 'https://schema.org/InStock',
-                    'priceCurrency': 'INR'
+                    'price': item.price || '299',
+                    'priceCurrency': 'INR',
+                    'availability': 'https://schema.org/InStock'
                 }
             }
         }))

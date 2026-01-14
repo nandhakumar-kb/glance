@@ -163,7 +163,13 @@ export const generateCollectionStructuredData = (items, name) => ({
             'item': {
                 '@type': 'Product',
                 'name': item.title,
-                'image': item.image
+                'image': item.image,
+                'offers': {
+                    '@type': 'Offer',
+                    'url': item.affiliateLinkIN || item.link || window.location.href,
+                    'availability': 'https://schema.org/InStock',
+                    'priceCurrency': 'INR'
+                }
             }
         }))
     }

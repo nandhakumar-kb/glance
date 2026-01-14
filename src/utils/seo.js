@@ -171,7 +171,24 @@ export const generateCollectionStructuredData = (items, name) => ({
                     'price': item.price || '299',
                     'priceCurrency': 'INR',
                     'availability': 'https://schema.org/InStock',
-                    'priceValidUntil': '2026-12-31'
+                    'priceValidUntil': '2026-12-31',
+                    'shippingDetails': {
+                        '@type': 'OfferShippingDetails',
+                        'shippingRate': {
+                            '@type': 'MonetaryAmount',
+                            'value': '0',
+                            'currency': 'INR'
+                        },
+                        'shippingDestination': {
+                            '@type': 'DefinedRegion',
+                            'addressCountry': 'IN'
+                        }
+                    },
+                    'hasMerchantReturnPolicy': {
+                        '@type': 'MerchantReturnPolicy',
+                        'returnPolicyCategory': 'https://schema.org/MerchantReturnFiniteReturnWindow',
+                        'merchantReturnDays': 30
+                    }
                 },
                 'aggregateRating': {
                     '@type': 'AggregateRating',

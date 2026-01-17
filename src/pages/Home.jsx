@@ -39,9 +39,9 @@ function Home({ products, favorites, toggleFavorite }) {
     // SEO: Update meta tags and structured data
     useEffect(() => {
         updateSEO({
-            title: 'GlanceRead - Discover Premium Books for Personal Growth & Success | Best Book Recommendations',
-            description: 'Discover handpicked premium books that shape successful minds. Get curated book recommendations in productivity, finance, self-help, business, and personal development. Build your ideal library with expert-selected bestsellers.',
-            keywords: 'premium books, book recommendations, best books, personal growth books, productivity books, finance books, self-help books, business books, bestselling books, book collection, reading list, must-read books, success books, self-improvement',
+            title: 'GlanceRead | Premium Book Summaries for Personal Growth',
+            description: 'Discover curated book summaries for productivity, finance, and self-help. GlanceRead helps you learn key insights from premium books in minutes.',
+            keywords: 'book summaries, premium books, personal growth, productivity, finance, self-help, book insights, learn, knowledge, self-improvement',
             canonical: 'https://glanceread.vercel.app/',
             structuredData: generateCollectionStructuredData(products, 'Premium Book Collection')
         });
@@ -236,10 +236,18 @@ function Home({ products, favorites, toggleFavorite }) {
                 </div>
             </nav>
 
+            {/* SEO-optimized intro section */}
+            <section className="intro-section" style={{ padding: '2rem 1rem', maxWidth: '1200px', margin: '0 auto', textAlign: 'center' }}>
+                <h1 style={{ fontSize: '2rem', fontWeight: 'bold', marginBottom: '1rem', color: '#1a1a1a' }}>Welcome to GlanceRead</h1>
+                <p style={{ fontSize: '1.1rem', lineHeight: '1.6', color: '#4a5568', maxWidth: '800px', margin: '0 auto' }}>
+                    We provide high-quality summaries of the world's best non-fiction books. Explore our curated collection to boost your productivity and knowledge.
+                </p>
+            </section>
+
             <header className="hero-section">
                 <div className="hero-content">
                     <div className="hero-badge" role="status">Curated Collection</div>
-                    <h1>Premium Reads</h1>
+                    <h2 style={{ fontSize: '2.5rem', fontWeight: 'bold' }}>Premium Reads</h2>
                     <p>Discover the books that shape successful minds. Handpicked for your personal growth and library.</p>
                     <a href="#collection" className="hero-cta">
                         Explore Collection →
